@@ -11,6 +11,7 @@ using Oracle.ManagedDataAccess.Client;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Net.Mail;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 
 namespace WinFormsApp5
@@ -231,7 +232,8 @@ namespace WinFormsApp5
             if ((string.IsNullOrEmpty(textBox1.Text) != true) && (string.IsNullOrEmpty(textBox2.Text)) != true && string.IsNullOrEmpty(textBox3.Text) != true && IsValid(textBox3.Text) && string.IsNullOrEmpty(textBox4.Text) != true && (checkBox1.Checked == true || checkBox2.Checked == true) && string.IsNullOrEmpty(comboBox2.Text) != true)
             {
 
-
+               
+               
 
 
                 con2.Open();
@@ -244,11 +246,19 @@ namespace WinFormsApp5
                 checkPatientPasswordCmd.Parameters.Add(":password", OracleDbType.Varchar2).Value = doctorPassword;
                 int patientPasswordCount = Convert.ToInt32(checkPatientPasswordCmd.ExecuteScalar());
 
+
+
+
+
                 // Check if the password is already used by any doctor
                 OracleCommand checkDoctorPasswordCmd = con2.CreateCommand();
                 checkDoctorPasswordCmd.CommandText = "SELECT COUNT(*) FROM DOCTORS WHERE password = :password";
                 checkDoctorPasswordCmd.Parameters.Add(":password", OracleDbType.Varchar2).Value = doctorPassword;
                 int doctorPasswordCount = Convert.ToInt32(checkDoctorPasswordCmd.ExecuteScalar());
+
+
+               
+
 
 
                 if (doctorPasswordCount > 0)
@@ -283,6 +293,51 @@ namespace WinFormsApp5
                 checkPasswordCmd.Parameters.Add(":password", OracleDbType.Varchar2).Value = textBox2.Text;
                 int passwordCount = Convert.ToInt32(checkPasswordCmd.ExecuteScalar());
 
+
+
+
+                // check email if they exist doctor and in another table 
+                string email1 = textBox3.Text.Trim();
+                OracleCommand cmdGetOriginalEmail = con2.CreateCommand();
+                cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM DOCTORS WHERE  email = :demail";
+                cmdGetOriginalEmail.Parameters.Clear();
+                cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+
+
+                int Dmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+                
+
+
+
+                cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE  email = :demail";
+                cmdGetOriginalEmail.Parameters.Clear();
+
+                cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                int Pmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+                cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM NURSE WHERE  email = :demail";
+                cmdGetOriginalEmail.Parameters.Clear();
+
+                cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                int Nmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+                cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM RECEPTIONIST WHERE  email = :demail";
+                cmdGetOriginalEmail.Parameters.Clear();
+
+                cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                int Rmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+
+
+
+
+
                 if (nameCount > 0)
                 {
 
@@ -299,6 +354,13 @@ namespace WinFormsApp5
                 else if (textBox1.Text == "Inshal")
                 {
                     MessageBox.Show("Error:  Please choose a different Name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    con2.Close();
+                    return;
+                }
+               else if (Dmail > 0 || Pmail > 0 || Rmail > 0 || Nmail > 0)
+                {
+                    // Password match found in the patient table
+                    MessageBox.Show(" Please choose a different email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     con2.Close();
                     return;
                 }

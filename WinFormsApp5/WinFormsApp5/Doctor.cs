@@ -231,6 +231,8 @@ namespace WinFormsApp5
 
         }
 
+
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.Rows.Count == 0)
@@ -306,7 +308,7 @@ namespace WinFormsApp5
                             con4.Open();
                             // check email if they exist doctor and in another table 
                             OracleCommand cmdGetOriginalEmail = con4.CreateCommand();
-                            cmdGetOriginalEmail.CommandText = "SELECT Email FROM DOCTORS WHERE  email = :demail";
+                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM DOCTORS WHERE  email = :demail";
                             cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email;
 
 
@@ -314,17 +316,17 @@ namespace WinFormsApp5
 
 
 
-                            cmdGetOriginalEmail.CommandText = "SELECT Email FROM PATIENT WHERE  email = :demail";
+                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE  email = :demail";
                             int Pmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
 
 
 
-                            cmdGetOriginalEmail.CommandText = "SELECT Email FROM NURSE WHERE  email = :demail";
+                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM NURSE WHERE  email = :demail";
 
                             int Nmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
 
 
-                            cmdGetOriginalEmail.CommandText = "SELECT Email RECEPTIONIST WHERE  email = :demail";
+                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE  email = :demail";
 
                             int Rmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
 
@@ -372,7 +374,7 @@ namespace WinFormsApp5
 
 
 
-                            if (patientPasswordCount == 0 && NursePasswordCount ==0 && ReceptionistPasswordCount ==0 && doctorPasswordCount == 0  ) 
+                            if (patientPasswordCount == 0 && NursePasswordCount ==0 && ReceptionistPasswordCount ==0 && doctorPasswordCount == 0 && Dmail ==0 && Pmail ==0 && Rmail ==0 && Nmail==0 ) 
                             {
                            /*     // No match found in the patient table, proceed with the update
                                 OracleCommand cmdSelect = con4.CreateCommand();
@@ -400,27 +402,51 @@ namespace WinFormsApp5
                                     {
                                         MessageBox.Show("Record updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         con4.Close();
-                                        updateGrid(); // Refresh the DataGridView
-                                    }
-                                    else
+                                    updateGrid(); // Refresh the DataGridView
+                                    con4.Close();
+                                    return;
+                                }
+                                else
                                     {
                                         MessageBox.Show("No records updated.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         con4.Close();
-                                        updateGrid(); // Refresh the DataGridView
-                                    }
-                              /*  }
-                                else
-                                {
-                                    // The updated name already exists in the DOCTORS table
-                                    MessageBox.Show("The updated name already exists in the table. Please choose a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }*/
+                                    updateGrid(); // Refresh the DataGridView
+                                    con4.Close();
+                                    return;
+                                }
+                                /*  }
+                                  else
+                                  {
+                                      // The updated name already exists in the DOCTORS table
+                                      MessageBox.Show("The updated name already exists in the table. Please choose a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                  }*/
                             }
                             else
                             {
 
-                                // Password match found in the patient table
-                                MessageBox.Show(" Please choose a different.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                if (Dmail > 0 || Pmail > 0 || Rmail > 0 || Nmail > 0)
+                                {
+                                    // Password match found in the patient table
+                                    MessageBox.Show(" Please choose a different email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    con4.Close();
+                                    updateGrid();
+                                    return;
+                                }
+
+                                if (!IsValidEmail(email))
+                                {
+                                    MessageBox.Show(" Please choose a different email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    con4.Close();
+                                    updateGrid();
+                                    return;
+                                }
+                                
+
+
+                                MessageBox.Show(" Please choose  different Password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 con4.Close();
+                                updateGrid();
+                                return;
                             }
                         }
                         catch (Exception ex)
@@ -429,6 +455,8 @@ namespace WinFormsApp5
 
                             MessageBox.Show("Error updating record: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             con4.Close();
+                            updateGrid();
+                            return;
                         }
                         finally
                         {

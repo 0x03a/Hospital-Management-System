@@ -138,6 +138,47 @@ namespace WinFormsApp5
 
                 try
                 {
+
+                    con6.Open();
+                    string email1 = textBox3.Text.Trim();
+                    OracleCommand cmdGetOriginalEmail = con6.CreateCommand();
+                    cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM DOCTORS WHERE  email = :demail";
+                    cmdGetOriginalEmail.Parameters.Clear();
+                    cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+
+
+                    int Dmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+
+
+                    cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE  email = :demail";
+                    cmdGetOriginalEmail.Parameters.Clear();
+
+                    cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                    int Pmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+                    cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM NURSE WHERE  email = :demail";
+                    cmdGetOriginalEmail.Parameters.Clear();
+
+                    cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                    int Nmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+                    cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM RECEPTIONIST WHERE  email = :demail";
+                    cmdGetOriginalEmail.Parameters.Clear();
+
+                    cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                    int Rmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+                    con6.Close();
+
+
+
                     con6.Open();
 
                     // Check if nurse with the same name already exists
@@ -175,9 +216,14 @@ namespace WinFormsApp5
 
 
 
+
+
+
+
+
                     int existingCount = Convert.ToInt32(cmdCheckDuplicate.ExecuteScalar());
 
-                    if (existingCount == 0 && patientPasswordCount == 0 && NursePasswordCount == 0 && ReceptionistPasswordCount == 0 && doctorPasswordCount == 0)
+                    if (existingCount == 0 && patientPasswordCount == 0 && NursePasswordCount == 0 && ReceptionistPasswordCount == 0 && doctorPasswordCount == 0 && Dmail == 0 && Pmail == 0 && Rmail == 0 && Nmail == 0)
                     {
                         // No nurse with the same name exists, proceed with insertion
                         OracleCommand insertingEmp = con6.CreateCommand();
@@ -205,13 +251,22 @@ namespace WinFormsApp5
                     }
                     else
                     {
-                        if (patientPasswordCount == 0 || NursePasswordCount == 0 || ReceptionistPasswordCount == 0 || doctorPasswordCount == 0)
+                        if (patientPasswordCount > 0 || NursePasswordCount > 0 || ReceptionistPasswordCount > 0 || doctorPasswordCount > 0)
                         {
                             // Nurse with the same name already exists
                             MessageBox.Show("Password Exists. Please choose different .", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+                        else if (Dmail > 0 || Pmail > 0 || Rmail > 0 || Nmail > 0)
+                        {
+                            // Password match found in the patient table
+                            MessageBox.Show(" Please choose a different email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            con6.Close();
+          
+                            return;
+                        }
                         else  // Nurse with the same name already exists
-                        MessageBox.Show("A nurse with the same name already exists. Please choose a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("A nurse with the same name already exists. Please choose a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        
                     }
                 }
                 catch (Exception ex)

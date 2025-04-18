@@ -1,0 +1,11 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.VC.db
+*.pdb
+*.vsidx
+
+# Build folders
+bin/
+obj/
