@@ -1,0 +1,539 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\add_nurse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\add_nurse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\winformsapp5.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\winformsapp5.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\nurse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\nurse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\receptionist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\receptionist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\receptionist_add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\receptionist_add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\total_appointments_in_admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\total_appointments_in_admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\total_appointments_in_patientview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\total_appointments_in_patientview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\receptionist_add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\receptionist_add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\receptionist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\receptionist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\patientinadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\patientinadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\patient_view.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\patient_view.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\add_nurse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\add_nurse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\receptionist_in_patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\receptionist_in_patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\receptionist_in_patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\receptionist_in_patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\patientinadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\patientinadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\add_doctors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\add_doctors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\add_doctors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\add_doctors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\nurse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\nurse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\patient_sign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\patient_sign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\doctor_view.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\doctor_view.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\doctor_view.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\doctor_view.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\total_appointments_in_admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\total_appointments_in_admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\total_appointments_in_patientview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\total_appointments_in_patientview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\total_app_in_doctors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\total_app_in_doctors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\winformsapp5\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\patient_sign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\patient_sign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|c:\\users\\admin\\desktop\\hospitalmanagementsystem\\22f-3365, db-project-4e(bscs)\\winformsapp5\\winformsapp5\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684B0477-2094-4586-9E4D-A6A3326C08BD}|WinFormsApp5\\WinFormsApp5.csproj|solutionrelative:winformsapp5\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 165,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 269,
+          "SelectedChildIndex": 14,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PatientinAdmin.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\PatientinAdmin.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\PatientinAdmin.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\PatientinAdmin.cs",
+              "RelativeToolTip": "WinFormsApp5\\PatientinAdmin.cs",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAUwEkAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T06:07:57.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Total_Appointments_IN_Admin.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_Appointments_IN_Admin.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Total_Appointments_IN_Admin.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_Appointments_IN_Admin.cs",
+              "RelativeToolTip": "WinFormsApp5\\Total_Appointments_IN_Admin.cs",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAcwD4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:58:32.498Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Total_Appointments_in_PatientView.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_Appointments_in_PatientView.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Total_Appointments_in_PatientView.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_Appointments_in_PatientView.cs",
+              "RelativeToolTip": "WinFormsApp5\\Total_Appointments_in_PatientView.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAUwHwAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T05:37:39.476Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Receptionist.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Receptionist.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist.cs",
+              "RelativeToolTip": "WinFormsApp5\\Receptionist.cs",
+              "ViewState": "AgIAABMBAAAAAAAAAAAQwB8BAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WinFormsApp5.csproj",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\WinFormsApp5.csproj",
+              "RelativeDocumentMoniker": "WinFormsApp5\\WinFormsApp5.csproj",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\WinFormsApp5.csproj",
+              "RelativeToolTip": "WinFormsApp5\\WinFormsApp5.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-17T11:07:11.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Form2.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Form2.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Form2.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Form2.cs",
+              "RelativeToolTip": "WinFormsApp5\\Form2.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAQwCgAAABjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Patient_sign.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Patient_sign.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Patient_sign.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Patient_sign.cs",
+              "RelativeToolTip": "WinFormsApp5\\Patient_sign.cs",
+              "ViewState": "AgIAAPUBAAAAAAAAAAAAAAECAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.544Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Receptionist_In_Patient.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist_In_Patient.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Receptionist_In_Patient.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist_In_Patient.cs",
+              "RelativeToolTip": "WinFormsApp5\\Receptionist_In_Patient.cs",
+              "ViewState": "AgIAAG0BAAAAAAAAAAAswEgBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.547Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Doctor_view.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Doctor_view.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Doctor_view.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Doctor_view.cs",
+              "RelativeToolTip": "WinFormsApp5\\Doctor_view.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.549Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Form1.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Form1.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Form1.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.552Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Form1.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Form1.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Form1.cs",
+              "RelativeToolTip": "WinFormsApp5\\Form1.cs",
+              "ViewState": "AgIAAPoAAAAAAAAAAAAuwKIAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.554Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Receptionist_add.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist_add.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Receptionist_add.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist_add.cs",
+              "RelativeToolTip": "WinFormsApp5\\Receptionist_add.cs",
+              "ViewState": "AgIAAPsAAAAAAAAAAAAAAEEBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Add_Nurse.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Add_Nurse.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Add_Nurse.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Add_Nurse.cs",
+              "RelativeToolTip": "WinFormsApp5\\Add_Nurse.cs",
+              "ViewState": "AgIAALsAAAAAAAAAAAAgwM4AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Nurse.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Nurse.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Nurse.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Nurse.cs",
+              "RelativeToolTip": "WinFormsApp5\\Nurse.cs",
+              "ViewState": "AgIAALkAAAAAAAAAAAAQwPcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Doctor.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Doctor.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Doctor.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Doctor.cs*",
+              "RelativeToolTip": "WinFormsApp5\\Doctor.cs*",
+              "ViewState": "AgIAACgBAAAAAAAAAAAQwDoBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Total_Appointments_in_PatientView.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_Appointments_in_PatientView.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Total_Appointments_in_PatientView.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_Appointments_in_PatientView.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Total_Appointments_in_PatientView.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.566Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Total_Appointments_IN_Admin.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_Appointments_IN_Admin.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Total_Appointments_IN_Admin.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_Appointments_IN_Admin.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Total_Appointments_IN_Admin.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.566Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Total_App_IN_DOCTORS.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_App_IN_DOCTORS.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Total_App_IN_DOCTORS.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Total_App_IN_DOCTORS.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Total_App_IN_DOCTORS.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:11.567Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Doctor.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Doctor.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Doctor.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Doctor.cs [Design]*",
+              "RelativeToolTip": "WinFormsApp5\\Doctor.cs [Design]*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.419Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Receptionist_In_Patient.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist_In_Patient.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Receptionist_In_Patient.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist_In_Patient.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Receptionist_In_Patient.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.434Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Receptionist_add.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist_add.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Receptionist_add.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist_add.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Receptionist_add.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.442Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Receptionist.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Receptionist.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Receptionist.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Receptionist.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.452Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PatientinAdmin.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\PatientinAdmin.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\PatientinAdmin.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\PatientinAdmin.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\PatientinAdmin.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.453Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Patient_View.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Patient_View.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Patient_View.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Patient_View.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Patient_View.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.454Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Patient_sign.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Patient_sign.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Patient_sign.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Patient_sign.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Patient_sign.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.463Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Nurse.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Nurse.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Nurse.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Nurse.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Nurse.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.47Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Form2.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Form2.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Form2.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Form2.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Form2.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.477Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Doctor_view.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Doctor_view.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Doctor_view.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Doctor_view.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Doctor_view.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.485Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Add_Nurse.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Add_Nurse.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Add_Nurse.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Add_Nurse.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Add_Nurse.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.492Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Add_Doctors.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Add_Doctors.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Add_Doctors.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Add_Doctors.cs",
+              "RelativeToolTip": "WinFormsApp5\\Add_Doctors.cs",
+              "ViewState": "AgIAACgBAAAAAAAAAAAAwDUBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.493Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Add_Doctors.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Add_Doctors.cs",
+              "RelativeDocumentMoniker": "WinFormsApp5\\Add_Doctors.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\HospitalManagementSystem\\22F-3365, DB-Project-4E(BSCS)\\WinFormsApp5\\WinFormsApp5\\Add_Doctors.cs [Design]",
+              "RelativeToolTip": "WinFormsApp5\\Add_Doctors.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T11:07:12.502Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
