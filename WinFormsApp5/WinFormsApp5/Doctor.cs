@@ -99,11 +99,82 @@ namespace WinFormsApp5
             form.Show();
         }
 
+        // Replace your current IsValidEmail method with this more robust version
         private bool IsValidEmail(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
             try
             {
-                // Use .NET's built-in validation or regex for email format
+                // Basic structure check
+                int atIndex = email.IndexOf('@');
+                if (atIndex <= 0 || atIndex == email.Length - 1)
+                    return false;
+
+                // Local part and domain part
+                string localPart = email.Substring(0, atIndex);
+                string domainPart = email.Substring(atIndex + 1);
+
+                // Local part validation
+                if (localPart.Length > 64)
+                    return false;
+
+                // Check for invalid characters in local part
+                string invalidLocalChars = "(),:;<>@[\\]";
+                foreach (char c in invalidLocalChars)
+                {
+                    if (localPart.Contains(c))
+                        return false;
+                }
+
+                // Check if local part starts or ends with a dot
+                if (localPart.StartsWith(".") || localPart.EndsWith("."))
+                    return false;
+
+                // Check if local part has consecutive dots
+                if (localPart.Contains(".."))
+                    return false;
+
+                // Domain part validation
+                if (domainPart.Length > 255)
+                    return false;
+
+                // Domain must have at least one dot
+                if (!domainPart.Contains("."))
+                    return false;
+
+                // Domain must not start or end with a dot or hyphen
+                if (domainPart.StartsWith(".") || domainPart.EndsWith(".") ||
+                    domainPart.StartsWith("-") || domainPart.EndsWith("-"))
+                    return false;
+
+                // Domain parts validation
+                string[] domainParts = domainPart.Split('.');
+                foreach (string part in domainParts)
+                {
+                    // Each domain part must not be empty
+                    if (string.IsNullOrEmpty(part))
+                        return false;
+
+                    // Domain parts must only contain letters, numbers, and hyphens
+                    foreach (char c in part)
+                    {
+                        if (!char.IsLetterOrDigit(c) && c != '-')
+                            return false;
+                    }
+
+                    // Domain parts must not have consecutive hyphens
+                    if (part.Contains("--"))
+                        return false;
+                }
+
+                // Top-level domain validation
+                string tld = domainParts[domainParts.Length - 1];
+                if (tld.Length < 2)
+                    return false;
+
+                // Final verification with .NET's MailAddress
                 var addr = new System.Net.Mail.MailAddress(email);
                 return addr.Address == email;
             }
@@ -241,6 +312,12 @@ namespace WinFormsApp5
                 return;
             }
 
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                string columnName = dataGridView1.Columns[e.ColumnIndex].Name;
+                MessageBox.Show($"Clicked column: {columnName}, Index: {e.ColumnIndex}");
+            }
+
             if (e.ColumnIndex == dataGridView1.Columns["delete"].Index && e.RowIndex >= 0)
             {
                 object value = dataGridView1.Rows[e.RowIndex].Cells["ID"].Value;
@@ -275,14 +352,9 @@ namespace WinFormsApp5
                     MessageBox.Show("Selected row does not contain a valid Doctor ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            // Revised Update button handler inside dataGridView1_CellContentClick
             else if (e.ColumnIndex == dataGridView1.Columns["Update"].Index && e.RowIndex >= 0)
             {
-
-              
-
-
-
-
                 object value = dataGridView1.Rows[e.RowIndex].Cells["ID"].Value;
                 if (value != DBNull.Value && value != null)
                 {
@@ -296,180 +368,150 @@ namespace WinFormsApp5
                     string gender = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells["Gender"].Value);
                     float salary = Convert.ToSingle(dataGridView1.Rows[e.RowIndex].Cells["Salary"].Value);
 
-                    DialogResult result = MessageBox.Show("Are you sure you want to update this record?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes )
-           
+                    // Validate email format first before proceeding
+                    if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
                     {
+                        MessageBox.Show("Please enter a valid email address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        updateGrid();
+                        return;
+                    }
 
+                    DialogResult result = MessageBox.Show("Are you sure you want to update this record?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
                         try
                         {
-
-
                             con4.Open();
-                            // check email if they exist doctor and in another table 
+
+                            // Get the original email for this doctor to check if it's being changed
                             OracleCommand cmdGetOriginalEmail = con4.CreateCommand();
-                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM DOCTORS WHERE  email = :demail";
-                            cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email;
+                            cmdGetOriginalEmail.CommandText = "SELECT Email FROM DOCTORS WHERE ID = :doctorId";
+                            cmdGetOriginalEmail.Parameters.Add("doctorId", OracleDbType.Int64).Value = DOCTOR_idd;
+                            string originalEmail = Convert.ToString(cmdGetOriginalEmail.ExecuteScalar());
 
+                            // Only check for email uniqueness if the email is being changed
+                            bool emailChanged = !string.Equals(originalEmail, email, StringComparison.OrdinalIgnoreCase);
 
-                            int Dmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+                            if (emailChanged)
+                            {
+                                // Check if email exists in any table
+                                bool emailExists = false;
 
+                                // Check in DOCTORS table (excluding current doctor)
+                                cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM DOCTORS WHERE Email = :email AND ID != :doctorId";
+                                cmdGetOriginalEmail.Parameters.Clear();
+                                cmdGetOriginalEmail.Parameters.Add("email", OracleDbType.Varchar2).Value = email;
+                                cmdGetOriginalEmail.Parameters.Add("doctorId", OracleDbType.Int64).Value = DOCTOR_idd;
+                                int doctorEmailCount = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+                                emailExists = doctorEmailCount > 0;
 
+                                // Check in PATIENT table
+                                if (!emailExists)
+                                {
+                                    cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE Email = :email";
+                                    cmdGetOriginalEmail.Parameters.Clear();
+                                    cmdGetOriginalEmail.Parameters.Add("email", OracleDbType.Varchar2).Value = email;
+                                    int patientEmailCount = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+                                    emailExists = patientEmailCount > 0;
+                                }
 
-                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE  email = :demail";
-                            int Pmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+                                // Check in NURSE table
+                                if (!emailExists)
+                                {
+                                    cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM NURSE WHERE Email = :email";
+                                    cmdGetOriginalEmail.Parameters.Clear();
+                                    cmdGetOriginalEmail.Parameters.Add("email", OracleDbType.Varchar2).Value = email;
+                                    int nurseEmailCount = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+                                    emailExists = nurseEmailCount > 0;
+                                }
 
+                                // Check in RECEPTIONIST table
+                                if (!emailExists)
+                                {
+                                    cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE Email = :email";
+                                    cmdGetOriginalEmail.Parameters.Clear();
+                                    cmdGetOriginalEmail.Parameters.Add("email", OracleDbType.Varchar2).Value = email;
+                                    int receptionistEmailCount = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+                                    emailExists = receptionistEmailCount > 0;
+                                }
 
+                                if (emailExists)
+                                {
+                                    MessageBox.Show("This email address is already in use. Please choose a different email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    con4.Close();
+                                    return;
+                                }
+                            }
 
-                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM NURSE WHERE  email = :demail";
-
-                            int Nmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
-
-
-                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE  email = :demail";
-
-                            int Rmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
-
-                            con4.Close();
-
-
-                            con4.Open();
-
-
-
-                            // check password if they exist doctor and in another table 
+                            // Check if password is unique (if necessary)
                             OracleCommand cmdCheckPassword = con4.CreateCommand();
-
-
-                            cmdCheckPassword.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE Password = :password1";
-                            // once a parameter in this case is added you don't need to add it again.
-                            cmdCheckPassword.Parameters.Add(":password1", OracleDbType.Varchar2).Value = password;
-
-                            int patientPasswordCount = Convert.ToInt32(cmdCheckPassword.ExecuteScalar());
-
-
-
-                            cmdCheckPassword.CommandText = "SELECT COUNT(*) FROM NURSE WHERE Password = :password1";
-                        
-                            int NursePasswordCount = Convert.ToInt32(cmdCheckPassword.ExecuteScalar());
-
-
-                            cmdCheckPassword.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE Password = :password1";
-                           
-                            int ReceptionistPasswordCount = Convert.ToInt32(cmdCheckPassword.ExecuteScalar());
-
-
-                            cmdCheckPassword.CommandText = "SELECT COUNT(*) FROM Doctors WHERE Password = :password1";
-                           
-
+                            cmdCheckPassword.CommandText = "SELECT COUNT(*) FROM DOCTORS WHERE Password = :password AND ID != :doctorId";
+                            cmdCheckPassword.Parameters.Add("password", OracleDbType.Varchar2).Value = password;
+                            cmdCheckPassword.Parameters.Add("doctorId", OracleDbType.Int64).Value = DOCTOR_idd;
                             int doctorPasswordCount = Convert.ToInt32(cmdCheckPassword.ExecuteScalar());
 
+                            cmdCheckPassword.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE Password = :password";
+                            cmdCheckPassword.Parameters.Clear();
+                            cmdCheckPassword.Parameters.Add("password", OracleDbType.Varchar2).Value = password;
+                            int patientPasswordCount = Convert.ToInt32(cmdCheckPassword.ExecuteScalar());
 
+                            cmdCheckPassword.CommandText = "SELECT COUNT(*) FROM NURSE WHERE Password = :password";
+                            cmdCheckPassword.Parameters.Clear();
+                            cmdCheckPassword.Parameters.Add("password", OracleDbType.Varchar2).Value = password;
+                            int nursePasswordCount = Convert.ToInt32(cmdCheckPassword.ExecuteScalar());
 
-                           
+                            cmdCheckPassword.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE Password = :password";
+                            cmdCheckPassword.Parameters.Clear();
+                            cmdCheckPassword.Parameters.Add("password", OracleDbType.Varchar2).Value = password;
+                            int receptionistPasswordCount = Convert.ToInt32(cmdCheckPassword.ExecuteScalar());
 
+                            bool passwordExists = doctorPasswordCount > 0 || patientPasswordCount > 0 ||
+                                                nursePasswordCount > 0 || receptionistPasswordCount > 0;
 
-
-
-
-
-
-                            if (patientPasswordCount == 0 && NursePasswordCount ==0 && ReceptionistPasswordCount ==0 && doctorPasswordCount == 0 && Dmail ==0 && Pmail ==0 && Rmail ==0 && Nmail==0 ) 
+                            if (passwordExists)
                             {
-                           /*     // No match found in the patient table, proceed with the update
-                                OracleCommand cmdSelect = con4.CreateCommand();
-                                cmdSelect.CommandText = "SELECT COUNT(*) FROM DOCTORS WHERE Name = :UpdatedName AND id != :Doctor_id";
-                                cmdSelect.Parameters.Add("UpdatedName", OracleDbType.Varchar2).Value = name;
-                                cmdSelect.Parameters.Add("Doctor_id", OracleDbType.Int64).Value = DOCTOR_idd;
-*/
-                               /* int existingCount = Convert.ToInt32(cmdSelect.ExecuteScalar());*/
-/*
-                                if (existingCount == 0)
-                                {*/
-                                    // The updated name doesn't exist in the DOCTORS table
-                                    OracleCommand cmdUpdate = con4.CreateCommand();
-                                    cmdUpdate.CommandText = "UPDATE DOCTORS SET Name = :Name, Password = :Password1, Email = :Email, Qualification = :Qualification, Gender = :Gender, Salary = :Salary WHERE id = :Doctor_id";
-                                    cmdUpdate.Parameters.Add(":Name", OracleDbType.Varchar2).Value = name;
-                                    cmdUpdate.Parameters.Add(":Password1", OracleDbType.Varchar2).Value = password;
-                                    cmdUpdate.Parameters.Add(":Email", OracleDbType.Varchar2).Value = email;
-                                    cmdUpdate.Parameters.Add(":Qualification", OracleDbType.Varchar2).Value = qualification;
-                                    cmdUpdate.Parameters.Add(":Gender", OracleDbType.Varchar2).Value = gender;
-                                    cmdUpdate.Parameters.Add(":Salary", OracleDbType.Decimal).Value = salary;
-                                    cmdUpdate.Parameters.Add(":Doctor_id", OracleDbType.Int64).Value = DOCTOR_idd;
+                                MessageBox.Show("This password is already in use. Please choose a different password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                con4.Close();
+                                return;
+                            }
 
-                                    int rowsAffected = cmdUpdate.ExecuteNonQuery();
-                                    if (rowsAffected > 0)
-                                    {
-                                        MessageBox.Show("Record updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        con4.Close();
-                                    updateGrid(); // Refresh the DataGridView
-                                    con4.Close();
-                                    return;
-                                }
-                                else
-                                    {
-                                        MessageBox.Show("No records updated.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        con4.Close();
-                                    updateGrid(); // Refresh the DataGridView
-                                    con4.Close();
-                                    return;
-                                }
-                                /*  }
-                                  else
-                                  {
-                                      // The updated name already exists in the DOCTORS table
-                                      MessageBox.Show("The updated name already exists in the table. Please choose a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                  }*/
+                            // All checks passed, proceed with the update
+                            OracleCommand cmdUpdate = con4.CreateCommand();
+                            cmdUpdate.CommandText = "UPDATE DOCTORS SET Name = :Name, Password = :Password, Email = :Email, " +
+                                                    "Qualification = :Qualification, Gender = :Gender, Salary = :Salary " +
+                                                    "WHERE ID = :DoctorId";
+
+                            cmdUpdate.Parameters.Add("Name", OracleDbType.Varchar2).Value = name;
+                            cmdUpdate.Parameters.Add("Password", OracleDbType.Varchar2).Value = password;
+                            cmdUpdate.Parameters.Add("Email", OracleDbType.Varchar2).Value = email;
+                            cmdUpdate.Parameters.Add("Qualification", OracleDbType.Varchar2).Value = qualification;
+                            cmdUpdate.Parameters.Add("Gender", OracleDbType.Varchar2).Value = gender;
+                            cmdUpdate.Parameters.Add("Salary", OracleDbType.Decimal).Value = salary;
+                            cmdUpdate.Parameters.Add("DoctorId", OracleDbType.Int64).Value = DOCTOR_idd;
+
+                            int rowsAffected = cmdUpdate.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Record updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             else
                             {
-
-                                if (Dmail > 0 || Pmail > 0 || Rmail > 0 || Nmail > 0)
-                                {
-                                    // Password match found in the patient table
-                                    MessageBox.Show(" Please choose a different email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    con4.Close();
-                                    updateGrid();
-                                    return;
-                                }
-
-                                if (!IsValidEmail(email))
-                                {
-                                    MessageBox.Show(" Please choose a different email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    con4.Close();
-                                    updateGrid();
-                                    return;
-                                }
-                                
-
-
-                                MessageBox.Show(" Please choose  different Password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                con4.Close();
-                                updateGrid();
-                                return;
+                                MessageBox.Show("No records updated.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }
                         catch (Exception ex)
                         {
-
-
                             MessageBox.Show("Error updating record: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            con4.Close();
-                            updateGrid();
-                            return;
                         }
                         finally
                         {
-                            con4.Close();
+                            if (con4.State == ConnectionState.Open)
+                                con4.Close();
+                            updateGrid(); // Refresh the DataGridView
                         }
                     }
                 }
-
-
-
-
             }
-
 
 
 

@@ -158,6 +158,90 @@ namespace WinFormsApp5
 
             con8.Close();
         }
+
+        private bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            try
+            {
+                // Basic structure check
+                int atIndex = email.IndexOf('@');
+                if (atIndex <= 0 || atIndex == email.Length - 1)
+                    return false;
+
+                // Local part and domain part
+                string localPart = email.Substring(0, atIndex);
+                string domainPart = email.Substring(atIndex + 1);
+
+                // Local part validation
+                if (localPart.Length > 64)
+                    return false;
+
+                // Check for invalid characters in local part
+                string invalidLocalChars = "(),:;<>@[\\]";
+                foreach (char c in invalidLocalChars)
+                {
+                    if (localPart.Contains(c))
+                        return false;
+                }
+
+                // Check if local part starts or ends with a dot
+                if (localPart.StartsWith(".") || localPart.EndsWith("."))
+                    return false;
+
+                // Check if local part has consecutive dots
+                if (localPart.Contains(".."))
+                    return false;
+
+                // Domain part validation
+                if (domainPart.Length > 255)
+                    return false;
+
+                // Domain must have at least one dot
+                if (!domainPart.Contains("."))
+                    return false;
+
+                // Domain must not start or end with a dot or hyphen
+                if (domainPart.StartsWith(".") || domainPart.EndsWith(".") ||
+                    domainPart.StartsWith("-") || domainPart.EndsWith("-"))
+                    return false;
+
+                // Domain parts validation
+                string[] domainParts = domainPart.Split('.');
+                foreach (string part in domainParts)
+                {
+                    // Each domain part must not be empty
+                    if (string.IsNullOrEmpty(part))
+                        return false;
+
+                    // Domain parts must only contain letters, numbers, and hyphens
+                    foreach (char c in part)
+                    {
+                        if (!char.IsLetterOrDigit(c) && c != '-')
+                            return false;
+                    }
+
+                    // Domain parts must not have consecutive hyphens
+                    if (part.Contains("--"))
+                        return false;
+                }
+
+                // Top-level domain validation
+                string tld = domainParts[domainParts.Length - 1];
+                if (tld.Length < 2)
+                    return false;
+
+                // Final verification with .NET's MailAddress
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -212,11 +296,65 @@ namespace WinFormsApp5
                     string gender = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells["Gender"].Value);
                     float salary = Convert.ToSingle(dataGridView1.Rows[e.RowIndex].Cells["Salary"].Value);
 
+                    if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
+                    {
+                        MessageBox.Show("Please enter a valid email address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        updateGrid();
+                        return;
+                    }
+
                     DialogResult result = MessageBox.Show("Are you sure you want to update this record?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         try
                         {
+
+                            con8.Open();
+
+                            OracleCommand cmdGetOriginalEmail = con8.CreateCommand();
+                            cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM DOCTORS WHERE  email = :demail";
+                            cmdGetOriginalEmail.Parameters.Clear();
+                            cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email;
+
+
+                            int Dmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+
+
+                            cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE  email = :demail";
+                            cmdGetOriginalEmail.Parameters.Clear();
+
+                            cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email;
+                            int Pmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+                            cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM RECEPTIONIST WHERE  email = :demail AND id != :currentID";
+                            cmdGetOriginalEmail.Parameters.Clear();
+
+                            cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email;
+                            cmdGetOriginalEmail.Parameters.Add("currentID", OracleDbType.Int64).Value = RECEPTIONIST_idd;
+                            int Nmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+                            cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM NURSE WHERE  email = :demail";
+                            cmdGetOriginalEmail.Parameters.Clear();
+
+                            cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email;
+                            int Rmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+
+
+                            con8.Close();
+
+
+
+
+
                             con8.Open();
                             OracleCommand cmdSelect = con8.CreateCommand();
                             // First check
@@ -227,7 +365,7 @@ namespace WinFormsApp5
                             int existingCount = Convert.ToInt32(cmdSelect.ExecuteScalar());
 
                             // Second check
-                            cmdSelect.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE password = :pass1";
+                            cmdSelect.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE password = :pass1";
                             cmdSelect.Parameters.Clear();
                             cmdSelect.Parameters.Add("pass1", OracleDbType.Varchar2).Value = password;
                             int patientPasswordCount = Convert.ToInt32(cmdSelect.ExecuteScalar());
@@ -238,11 +376,7 @@ namespace WinFormsApp5
                             cmdSelect.Parameters.Add("pass1", OracleDbType.Varchar2).Value = password;
                             int NursePasswordCount = Convert.ToInt32(cmdSelect.ExecuteScalar());
 
-                            // Fourth check  
-                            cmdSelect.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE Password = :pass1";
-                            cmdSelect.Parameters.Clear();
-                            cmdSelect.Parameters.Add("pass1", OracleDbType.Varchar2).Value = password;
-                            int ReceptionistPasswordCount = Convert.ToInt32(cmdSelect.ExecuteScalar());
+                       
 
                             // Fifth check
                             cmdSelect.CommandText = "SELECT COUNT(*) FROM Doctors WHERE Password = :pass1";
@@ -250,8 +384,17 @@ namespace WinFormsApp5
                             cmdSelect.Parameters.Add("pass1", OracleDbType.Varchar2).Value = password;
                             int doctorPasswordCount = Convert.ToInt32(cmdSelect.ExecuteScalar());
 
+                            // Fourth check  
+                            cmdSelect.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE Password = :pass1 AND ID != :currentID";
+                            cmdSelect.Parameters.Clear();
 
-                            if (existingCount == 0 && patientPasswordCount == 0 && NursePasswordCount == 0 && ReceptionistPasswordCount == 0 && doctorPasswordCount == 0)
+                            cmdSelect.Parameters.Add("pass1", OracleDbType.Varchar2).Value = password;
+                            cmdSelect.Parameters.Add("currentID", OracleDbType.Int64).Value = RECEPTIONIST_idd;
+                            int ReceptionistPasswordCount = Convert.ToInt32(cmdSelect.ExecuteScalar());
+
+
+
+                            if (existingCount == 0 && patientPasswordCount == 0 && NursePasswordCount == 0 && ReceptionistPasswordCount == 0 && doctorPasswordCount == 0 && doctorPasswordCount == 0 && Dmail == 0 && Pmail == 0 && Rmail == 0 && Nmail == 0)
                             {
                                 
                                 // The updated name doesn't exist in the RECEPTIONIST table
@@ -281,13 +424,29 @@ namespace WinFormsApp5
                             }
                             else
                             {
-                                if (patientPasswordCount == 0 || NursePasswordCount == 0 || ReceptionistPasswordCount == 0 || doctorPasswordCount == 0)
+                                if (patientPasswordCount > 0 || NursePasswordCount > 0 || ReceptionistPasswordCount > 0 || doctorPasswordCount > 0)
                                 {
                                     // Nurse with the same name already exists
                                     MessageBox.Show("Password Exists. Please choose different .", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    con8.Close();
+                                    updateGrid();
+                                    return;
                                 }
+                                else if (Dmail > 0 || Pmail > 0 || Rmail > 0 || Nmail > 0)
+                                {
+                                    // Nurse with the same name already exists
+                                    MessageBox.Show("Email Exists. Please choose different .", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    con8.Close();
+                                    updateGrid();
+                                    return;
+                                }
+
                                 else  // The updated name already exists in the RECEPTIONIST table
-                                MessageBox.Show("The updated name already exists in the table. Please choose a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                { MessageBox.Show("The updated name already exists in the table. Please choose a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    con8.Close();
+                                    updateGrid();
+                                    return;
+                                }
                             }
                         }
                         catch (Exception ex)

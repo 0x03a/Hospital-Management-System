@@ -176,7 +176,7 @@ namespace WinFormsApp5
             {
                 con11.Open();
                 OracleCommand getDoctorIdCmd = con11.CreateCommand();
-                getDoctorIdCmd.CommandText = "SELECT DOCTOR_ID FROM DOCTORS WHERE Name = :doctorName";
+                getDoctorIdCmd.CommandText = "SELECT ID FROM DOCTORS WHERE Name = :doctorName";
 
                 // Add parameter without ":" in the parameter name
                 getDoctorIdCmd.Parameters.Add("doctorName", OracleDbType.Varchar2).Value = doctorName;

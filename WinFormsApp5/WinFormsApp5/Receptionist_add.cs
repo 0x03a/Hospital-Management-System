@@ -264,22 +264,105 @@ namespace WinFormsApp5
 
             }
 
-
+            string pass = Convert.ToString(textBox2.Text);
             if ((string.IsNullOrEmpty(textBox1.Text) != true) && (string.IsNullOrEmpty(textBox2.Text)) != true && string.IsNullOrEmpty(textBox3.Text) != true && IsValid(textBox3.Text) && string.IsNullOrEmpty(textBox4.Text) != true && (checkBox1.Checked == true || checkBox2.Checked == true) && string.IsNullOrEmpty(comboBox2.Text) != true)
             {
 
                 try
                 {
+
+
+
+                    con9.Open();
+                    string email1 = textBox3.Text;
+                    OracleCommand cmdGetOriginalEmail = con9.CreateCommand();
+                    cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM DOCTORS WHERE  email = :demail";
+                    cmdGetOriginalEmail.Parameters.Clear();
+                    cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+
+
+                    int Dmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+
+
+                    cmdGetOriginalEmail.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE  email = :demail";
+                    cmdGetOriginalEmail.Parameters.Clear();
+
+                    cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                    int Pmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+                    cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM NURSE WHERE  email = :demail";
+                    cmdGetOriginalEmail.Parameters.Clear();
+
+                    cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                    int Nmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+
+                    cmdGetOriginalEmail.CommandText = "SELECT  COUNT(*) FROM RECEPTIONIST WHERE  email = :demail";
+                    cmdGetOriginalEmail.Parameters.Clear();
+
+                    cmdGetOriginalEmail.Parameters.Add("demail", OracleDbType.Varchar2).Value = email1;
+                    int Rmail = Convert.ToInt32(cmdGetOriginalEmail.ExecuteScalar());
+
+
+                    con9.Close();
+
+
+
+                    con9.Open();
+
+                    // Check if RECEPTIONIST with the same name already exists
+                    OracleCommand cmdCheckDuplicate = con9.CreateCommand();
+                    cmdCheckDuplicate.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE UPPER(Name) = UPPER(:Name)";
+                    cmdCheckDuplicate.Parameters.Add(":Name", OracleDbType.Varchar2).Value = textBox1.Text.Trim().ToUpper(); // Convert to uppercase for case-insensitive comparison
+
+                    OracleCommand checkPassword = con9.CreateCommand();
+                    checkPassword.CommandText = "SELECT COUNT(*) FROM PATIENT WHERE password =:pass1 ";
+                    checkPassword.Parameters.Add(":pass1", OracleDbType.Varchar2).Value = pass;
+
+
+
+
+                    int patientPasswordCount = Convert.ToInt32(checkPassword.ExecuteScalar());
+
+
+
+                    checkPassword.CommandText = "SELECT COUNT(*) FROM NURSE WHERE Password = :pass1";
+
+                    int NursePasswordCount = Convert.ToInt32(checkPassword.ExecuteScalar());
+
+
+                    checkPassword.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE Password = :pass1";
+
+                    int ReceptionistPasswordCount = Convert.ToInt32(checkPassword.ExecuteScalar());
+
+
+                    checkPassword.CommandText = "SELECT COUNT(*) FROM Doctors WHERE Password = :pass1";
+
+
+                    int doctorPasswordCount = Convert.ToInt32(checkPassword.ExecuteScalar());
+
+
+
+                    con9.Close();
+
+
+
+
                     con9.Open();
 
                     // Check if receptionist with the same name already exists
-                    OracleCommand cmdCheckDuplicate = con9.CreateCommand();
+                     cmdCheckDuplicate = con9.CreateCommand();
                     cmdCheckDuplicate.CommandText = "SELECT COUNT(*) FROM RECEPTIONIST WHERE UPPER(Name) = UPPER(:Name)";
                     cmdCheckDuplicate.Parameters.Add(":Name", OracleDbType.Varchar2).Value = textBox1.Text.Trim().ToUpper(); // Convert to uppercase for case-insensitive comparison
 
                     int existingCount = Convert.ToInt32(cmdCheckDuplicate.ExecuteScalar());
 
-                    if (existingCount == 0)
+                    if (existingCount == 0 && patientPasswordCount == 0 && NursePasswordCount == 0 && ReceptionistPasswordCount == 0 && doctorPasswordCount == 0 && Dmail == 0 && Pmail == 0 && Rmail == 0 && Nmail == 0)
                     {
                         // No receptionist with the same name exists, proceed with insertion
                         OracleCommand insertingEmp = con9.CreateCommand();
@@ -307,6 +390,23 @@ namespace WinFormsApp5
                     }
                     else
                     {
+                        if (patientPasswordCount > 0 || NursePasswordCount > 0 || ReceptionistPasswordCount > 0 || doctorPasswordCount > 0)
+                        {
+                            // RECEPTIONIST with the same name already exists
+                            MessageBox.Show("Password Exists. Please choose different .", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            con9.Close();
+                            return;
+                        }
+                        else if (Dmail > 0 || Pmail > 0 || Rmail > 0 || Nmail > 0)
+                        {
+                            // Password match found in the patient table
+                            MessageBox.Show(" Please choose a different email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            con9.Close();
+                            
+
+                            return;
+                        }
+                        else
                         // Receptionist with the same name already exists
                         MessageBox.Show("A receptionist with the same name already exists. Please choose a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
