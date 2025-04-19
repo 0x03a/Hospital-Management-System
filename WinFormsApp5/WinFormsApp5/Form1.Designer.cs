@@ -61,12 +61,13 @@
             label2.BackColor = Color.Transparent;
             label2.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = Color.FromArgb(16, 122, 84);
-            label2.Location = new Point(109, 223);
+            label2.Location = new Point(124, 223);
             label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(68, 21);
+            label2.Size = new Size(80, 25);
             label2.TabIndex = 1;
             label2.Text = "NAME";
+            label2.Click += label2_Click;
             // 
             // label3
             // 
@@ -76,7 +77,7 @@
             label3.Location = new Point(109, 289);
             label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(115, 21);
+            label3.Size = new Size(124, 23);
             label3.TabIndex = 2;
             label3.Text = "PASSWORD";
             label3.Click += label3_Click;
@@ -89,7 +90,7 @@
             textBox1.Font = new Font("Times New Roman", 9F, FontStyle.Regular, GraphicsUnit.Point);
             textBox1.ForeColor = Color.Black;
             textBox1.Location = new Point(260, 223);
-            textBox1.Margin = new Padding(2, 2, 2, 2);
+            textBox1.Margin = new Padding(2);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(261, 25);
             textBox1.TabIndex = 3;
@@ -104,7 +105,7 @@
             textBox2.Font = new Font("Times New Roman", 9F, FontStyle.Regular, GraphicsUnit.Point);
             textBox2.ForeColor = Color.Black;
             textBox2.Location = new Point(260, 287);
-            textBox2.Margin = new Padding(2, 2, 2, 2);
+            textBox2.Margin = new Padding(2);
             textBox2.Name = "textBox2";
             textBox2.PasswordChar = '*';
             textBox2.Size = new Size(261, 25);
@@ -118,7 +119,7 @@
             button1.Image = (Image)resources.GetObject("button1.Image");
             button1.ImageAlign = ContentAlignment.MiddleLeft;
             button1.Location = new Point(487, 285);
-            button1.Margin = new Padding(2, 2, 2, 2);
+            button1.Margin = new Padding(2);
             button1.Name = "button1";
             button1.Size = new Size(34, 25);
             button1.TabIndex = 5;
@@ -130,7 +131,7 @@
             button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             button2.Image = (Image)resources.GetObject("button2.Image");
             button2.Location = new Point(487, 285);
-            button2.Margin = new Padding(2, 2, 2, 2);
+            button2.Margin = new Padding(2);
             button2.Name = "button2";
             button2.Size = new Size(34, 25);
             button2.TabIndex = 6;
@@ -146,7 +147,7 @@
             button3.Font = new Font("Times New Roman", 11F, FontStyle.Bold, GraphicsUnit.Point);
             button3.ForeColor = Color.FromArgb(16, 122, 84);
             button3.Location = new Point(322, 363);
-            button3.Margin = new Padding(2, 2, 2, 2);
+            button3.Margin = new Padding(2);
             button3.Name = "button3";
             button3.Size = new Size(96, 42);
             button3.TabIndex = 7;
@@ -163,7 +164,7 @@
             button4.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point);
             button4.ForeColor = Color.FromArgb(16, 122, 84);
             button4.Location = new Point(449, 363);
-            button4.Margin = new Padding(2, 2, 2, 2);
+            button4.Margin = new Padding(2);
             button4.Name = "button4";
             button4.Size = new Size(96, 42);
             button4.TabIndex = 8;
@@ -184,8 +185,8 @@
             panel1.Controls.Add(label3);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(textBox2);
-            panel1.Location = new Point(398, 110);
-            panel1.Margin = new Padding(2, 2, 2, 2);
+            panel1.Location = new Point(303, 110);
+            panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
             panel1.Size = new Size(720, 494);
             panel1.TabIndex = 9;
@@ -222,11 +223,11 @@
             BackColor = Color.FromArgb(16, 122, 84);
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1254, 627);
+            ClientSize = new Size(1318, 635);
             Controls.Add(panel1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
