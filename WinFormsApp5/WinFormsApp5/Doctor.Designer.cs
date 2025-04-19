@@ -97,7 +97,7 @@
             label5.Location = new Point(118, 257);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(89, 32);
+            label5.Size = new Size(75, 26);
             label5.TabIndex = 7;
             label5.Text = "Inshal";
             // 
@@ -240,7 +240,7 @@
             label6.AutoSize = true;
             label6.Location = new Point(347, 158);
             label6.Name = "label6";
-            label6.Size = new Size(187, 25);
+            label6.Size = new Size(163, 22);
             label6.TabIndex = 20;
             label6.Text = "DOCTOR TABLE";
             // 
@@ -262,13 +262,13 @@
             label7.AutoSize = true;
             label7.Location = new Point(381, 623);
             label7.Name = "label7";
-            label7.Size = new Size(315, 25);
+            label7.Size = new Size(272, 22);
             label7.TabIndex = 22;
             label7.Text = "DOCTOR SCHEDULE TABLE";
             // 
             // Doctor
             // 
-            AutoScaleDimensions = new SizeF(13F, 25F);
+            AutoScaleDimensions = new SizeF(11F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1471, 893);
             Controls.Add(label7);

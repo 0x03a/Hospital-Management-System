@@ -13,10 +13,10 @@ namespace WinFormsApp5
 {
     public partial class Total_App_IN_DOCTORS : Form
     {
-
         OracleConnection con14;
         private string Doctor_Name = "";
         private string Doctor_Password = "";
+
         public Total_App_IN_DOCTORS()
         {
             InitializeComponent();
@@ -27,8 +27,8 @@ namespace WinFormsApp5
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-            Doctor_Name = Doc_Name; Doctor_Password = Doc_pass;
-
+            Doctor_Name = Doc_Name;
+            Doctor_Password = Doc_pass;
         }
 
         private void Total_App_IN_DOCTORS_Load(object sender, EventArgs e)
@@ -40,21 +40,14 @@ namespace WinFormsApp5
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
-            // Set the font style of column headers to bold
             dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridView1.Font, FontStyle.Bold);
-
-
-           
-
-
-
         }
 
-        private void updateGrid()// for viewing the records
+        private void updateGrid()
         {
             con14.Open();
             OracleCommand getEmps = con14.CreateCommand();
-            getEmps.CommandText = "SELECT A_ID,PATIENT_ID, DOCTOR_NAME, S_TIME, E_TIME, STATUS, A_DATE, FEE, DISEASE FROM APPOINTMENT ORDER BY A_DATE";
+            getEmps.CommandText = "SELECT A_ID, PATIENT_ID, DOCTOR_NAME, S_TIME, E_TIME, STATUS, A_DATE, FEE, DISEASE FROM APPOINTMENT ORDER BY A_DATE";
             getEmps.CommandType = CommandType.Text;
             OracleDataReader empDR = getEmps.ExecuteReader();
             DataTable empDT = new DataTable();
@@ -63,144 +56,178 @@ namespace WinFormsApp5
             dataGridView1.DataSource = empDT;
             Doctor.Text = Doctor_Name;
 
-            DataGridViewButtonColumn updateButton2 = new DataGridViewButtonColumn();
-            updateButton2.FlatStyle = FlatStyle.Popup;
-            updateButton2.HeaderText = "Update";
-            updateButton2.Name = "Update";
-            updateButton2.UseColumnTextForButtonValue = true;
-            updateButton2.Text = "Update";
-            updateButton2.Width = 100;
+            // Remove existing STATUS column if it exists
+            if (dataGridView1.Columns.Contains("STATUS"))
+            {
+                dataGridView1.Columns.Remove("STATUS");
+            }
+
+            // Add ComboBox column for STATUS
+            DataGridViewComboBoxColumn statusColumn = new DataGridViewComboBoxColumn();
+            statusColumn.HeaderText = "STATUS";
+            statusColumn.Name = "STATUS";
+            statusColumn.DataPropertyName = "STATUS";
+            statusColumn.Items.AddRange("PENDING", "APPROVED", "CANCELLED", "COMPLETED");
+            dataGridView1.Columns.Add(statusColumn);
+
+            // Add Update button column
+            DataGridViewButtonColumn updateButton = new DataGridViewButtonColumn();
+            updateButton.FlatStyle = FlatStyle.Popup;
+            updateButton.HeaderText = "Action";
+            updateButton.Name = "Update";
+            updateButton.UseColumnTextForButtonValue = true;
+            updateButton.Text = "Update";
+            updateButton.Width = 100;
 
             if (!dataGridView1.Columns.Contains("Update"))
             {
-                dataGridView1.Columns.Add(updateButton2);
+                dataGridView1.Columns.Add(updateButton);
+            }
+
+            // Make all columns read-only except STATUS
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                if (column.Name != "STATUS")
+                {
+                    column.ReadOnly = true;
+                }
             }
 
             con14.Close();
-            Color lightRed = Color.FromArgb(220, 120, 120); // Light Red
-            Color lightGreen = Color.FromArgb(144, 238, 144); // Light Green
-            // Loop through each row in the DataGridView
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                // Get the cell in the 6th column
-                DataGridViewCell cell = row.Cells[5]; // 6th column (index 5)
 
-                // Check if the cell value equals "PENDING"
-                if (cell.Value != null && cell.Value.ToString() == "PENDING")
-                {
-                    // Change the background color to Light Red
-                    cell.Style.BackColor = lightRed;
-                    // Change the foreground color to White
-                    cell.Style.ForeColor = Color.Black;
-                    // Make the text bold
-                    cell.Style.Font = new Font(dataGridView1.Font, FontStyle.Bold);
-                }
-                // Check if the cell value equals "APPROVED"
-                else if (cell.Value != null && cell.Value.ToString() == "APPROVED")
-                {
-                    // Change the background color to Light Green
-                    cell.Style.BackColor = lightGreen;
-                    // Reset the foreground color to Black (default)
-                    cell.Style.ForeColor = Color.Black;
-                    // Make the text bold
-                    cell.Style.Font = new Font(dataGridView1.Font, FontStyle.Bold);
-                }
-                else
-                {
-                    // Reset the background and foreground colors, and the font style
-                    cell.Style.BackColor = dataGridView1.DefaultCellStyle.BackColor;
-                    cell.Style.ForeColor = dataGridView1.DefaultCellStyle.ForeColor;
-                    cell.Style.Font = new Font(dataGridView1.Font, FontStyle.Regular);
-                }
-            }
-
-
-
+            // Apply color coding
+            ApplyStatusColorCoding();
         }
 
+        private void ApplyStatusColorCoding()
+        {
+            Color lightRed = Color.FromArgb(220, 120, 120);
+            Color lightGreen = Color.FromArgb(144, 238, 144);
+            Color lightYellow = Color.FromArgb(255, 255, 150);
+            Color lightGray = Color.FromArgb(200, 200, 200);
 
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["STATUS"].Value != null)
+                {
+                    DataGridViewCell cell = row.Cells["STATUS"];
+                    string status = cell.Value.ToString();
+
+                    switch (status)
+                    {
+                        case "PENDING":
+                            cell.Style.BackColor = lightRed;
+                            cell.Style.ForeColor = Color.Black;
+                            break;
+                        case "APPROVED":
+                            cell.Style.BackColor = lightGreen;
+                            cell.Style.ForeColor = Color.Black;
+                            break;
+                        case "CANCELLED":
+                            cell.Style.BackColor = lightGray;
+                            cell.Style.ForeColor = Color.Black;
+                            break;
+                        case "COMPLETED":
+                            cell.Style.BackColor = lightYellow;
+                            cell.Style.ForeColor = Color.Black;
+                            break;
+                    }
+                    cell.Style.Font = new Font(dataGridView1.Font, FontStyle.Bold);
+                }
+            }
+        }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
-            if (dataGridView1.Rows.Count == 0)
+            if (e.RowIndex < 0 || dataGridView1.Rows.Count == 0)
             {
-                MessageBox.Show("No records found to update", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-
-
-
-            if (e.ColumnIndex == dataGridView1.Columns["Update"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == dataGridView1.Columns["Update"].Index)
             {
+                long A_id = Convert.ToInt64(dataGridView1.Rows[e.RowIndex].Cells["A_ID"].Value);
+                string newStatus = dataGridView1.Rows[e.RowIndex].Cells["STATUS"].Value.ToString();
+                string currentStatus = GetCurrentStatusFromDatabase(A_id);
 
-                // Check if the cell value for A_id is not null
-                object value = dataGridView1.Rows[e.RowIndex].Cells["A_id"].Value;
-                if (value != DBNull.Value && value != null)
+                // Validate status transition
+                if (currentStatus == "COMPLETED" || currentStatus == "CANCELLED")
                 {
-                    long A_idd = Convert.ToInt64(value);
-
-                    // Get the new status value from the DataGridView
-                    string status = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells["STATUS"].Value);
-
-                    // Ensure the status value is not null before proceeding with the update
-                    if (!string.IsNullOrEmpty(status))
-                    {
-                        // Prompt the user for confirmation
-                        DialogResult result = MessageBox.Show("Are you sure you want to update this record?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (result == DialogResult.Yes)
-                        {
-                            try
-                            {
-                                con14.Open();
-                                OracleCommand cmd = con14.CreateCommand();
-                                cmd.CommandText = "UPDATE APPOINTMENT SET STATUS=:statuss WHERE A_id = :A_idd";
-                                cmd.Parameters.Add("statuss", OracleDbType.Varchar2).Value = status;
-                                cmd.Parameters.Add("A_idd", OracleDbType.Int64).Value = A_idd;
-
-                                int rowsAffected = cmd.ExecuteNonQuery();
-                                if (rowsAffected > 0)
-                                {
-                                    MessageBox.Show("Record updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    con14.Close();
-                                    dataGridView1.Refresh();
-                                    updateGrid(); // Refresh the DataGridView
-
-                                    
-                                }
-                                else
-                                {
-                                    MessageBox.Show("No records updated.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    con14.Close();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Error updating record: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            finally
-                            {
-                                con14.Close();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Status value cannot be null or empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show($"Cannot change status from {currentStatus}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
+                DialogResult result = MessageBox.Show($"Change status from {currentStatus} to {newStatus}?", "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        con14.Open();
+                        OracleCommand cmd = con14.CreateCommand();
+                        cmd.CommandText = "UPDATE APPOINTMENT SET STATUS = :status WHERE A_ID = :A_id";
+                        cmd.Parameters.Add("status", OracleDbType.Varchar2).Value = newStatus;
+                        cmd.Parameters.Add("A_id", OracleDbType.Int64).Value = A_id;
 
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Status updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-
+                            con14.Close();
+                            updateGrid();
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No records updated.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            con14.Close();
+                            updateGrid();
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error updating record: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        con14.Close();
+                        updateGrid();
+                        return;
+                    }
+                    finally
+                    {
+                        con14.Close();
+                    }
+                }
             }
-
         }
 
-
-   
-
+        private string GetCurrentStatusFromDatabase(long A_id)
+        {
+            string status = "";
+            try
+            {
+                con14.Open();
+                OracleCommand cmd = con14.CreateCommand();
+                cmd.CommandText = "SELECT STATUS FROM APPOINTMENT WHERE A_ID = :A_id";
+                cmd.Parameters.Add("A_id", OracleDbType.Int64).Value = A_id;
+                object result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    status = result.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error retrieving current status: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                con14.Close() ;
+                updateGrid();
+               
+            }
+            finally
+            {
+                con14.Close();
+            }
+            return status;
+        }
 
         private void Doctor_Click(object sender, EventArgs e)
         {
@@ -209,7 +236,6 @@ namespace WinFormsApp5
 
         private void logoutbtn_Click(object sender, EventArgs e)
         {
-            // go to the login/sign in page
             this.Hide();
             Form1 form1 = new Form1();
             form1.Closed += (s, args) => form1.Close();
@@ -218,7 +244,6 @@ namespace WinFormsApp5
 
         private void Tappbtn_Click(object sender, EventArgs e)
         {
-            // go to the Doctor View again
             this.Hide();
             Doctor_view form1 = new Doctor_view(Doctor_Name, Doctor_Password);
             form1.Closed += (s, args) => form1.Close();

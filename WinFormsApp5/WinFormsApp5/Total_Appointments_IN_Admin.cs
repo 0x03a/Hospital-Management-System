@@ -159,7 +159,7 @@ namespace WinFormsApp5
 
             if (e.ColumnIndex == dataGridView1.Columns["delete"].Index && e.RowIndex >= 0)
             {
-                object value = dataGridView1.Rows[e.RowIndex].Cells["Id"].Value;
+                object value = dataGridView1.Rows[e.RowIndex].Cells["A_Id"].Value;
                 if (value != DBNull.Value && value != null)
                 {
                     long A_idd = Convert.ToInt64(value);
@@ -169,7 +169,7 @@ namespace WinFormsApp5
                     {
                         con13.Open();
                         OracleCommand getEmps = con13.CreateCommand();
-                        getEmps.CommandText = "DELETE FROM APPOINTMENT WHERE ID = :A_idd";
+                        getEmps.CommandText = "DELETE FROM APPOINTMENT WHERE A_ID = :A_idd";
                         getEmps.Parameters.Add("A_idd", OracleDbType.Int64).Value = A_idd; // Add parameter if Doctor_idd is of a different type
                         getEmps.CommandType = CommandType.Text;
                         int rowsAffected = getEmps.ExecuteNonQuery();
@@ -179,10 +179,15 @@ namespace WinFormsApp5
                             con13.Close();
                             dataGridView1.Refresh();
                             updateGrid(); // Refresh the DataGridView
+                            return;
                         }
                         else
                         {
                             MessageBox.Show("Failed to delete record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            con13.Close();
+                            dataGridView1.Refresh();
+                            updateGrid(); // Refresh the DataGridView
+                            return;
                         }
                         con13.Close();
                     }

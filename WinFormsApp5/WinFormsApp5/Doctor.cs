@@ -535,131 +535,219 @@ namespace WinFormsApp5
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
-
         {
             if (e.ColumnIndex == dataGridView2.Columns["Insert"].Index && e.RowIndex >= 0)
             {
-                object sTimeObject, eTimeObject, dayObject, doctor_Id;
-                sTimeObject = dataGridView2.Rows[e.RowIndex].Cells["S_TIME"].Value;
-                eTimeObject = dataGridView2.Rows[e.RowIndex].Cells["E_TIME"].Value;
-                dayObject = dataGridView2.Rows[e.RowIndex].Cells["DAY"].Value;
-                doctor_Id = dataGridView2.Rows[e.RowIndex].Cells["DOCTOR_ID"].Value;
-                // Check for DBNull values and handle them appropriately
-                if ((sTimeObject == DBNull.Value || sTimeObject == null) ||
-                    (eTimeObject == DBNull.Value || eTimeObject == null) ||
-                (dayObject == DBNull.Value || dayObject == null) ||
-                    (doctor_Id == DBNull.Value || doctor_Id == null))
+                // Instead of reading from grid cells, let's prompt the user for input
+                using (Form inputForm = new Form())
                 {
-                    MessageBox.Show("Please fill all the required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    inputForm.Text = "Schedule Details";
+                    inputForm.Size = new Size(400, 300);
+                    inputForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    inputForm.StartPosition = FormStartPosition.CenterParent;
+                    inputForm.MaximizeBox = false;
+                    inputForm.MinimizeBox = false;
 
-                // Check if the clicked cell is the button column and the button column is not the header
-                if (dataGridView2.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
-                {
-                    // Check if there are any records in the DataGridView
-                    if (dataGridView2.Rows.Count == 0)
+                    // Add doctor ID input
+                    Label lblDoctorId = new Label();
+                    lblDoctorId.Text = "Doctor ID:";
+                    lblDoctorId.SetBounds(20, 20, 100, 20);
+                    inputForm.Controls.Add(lblDoctorId);
+
+                    TextBox txtDoctorId = new TextBox();
+                    txtDoctorId.SetBounds(130, 20, 200, 20);
+                    inputForm.Controls.Add(txtDoctorId);
+
+                    // Add start time input
+                    Label lblStartTime = new Label();
+                    lblStartTime.Text = "Start Time:";
+                    lblStartTime.SetBounds(20, 60, 100, 20);
+                    inputForm.Controls.Add(lblStartTime);
+
+                    TextBox txtStartTime = new TextBox();
+                    txtStartTime.SetBounds(130, 60, 200, 20);
+                    txtStartTime.PlaceholderText = "e.g. 09:00 AM";
+                    inputForm.Controls.Add(txtStartTime);
+
+                    // Add end time input
+                    Label lblEndTime = new Label();
+                    lblEndTime.Text = "End Time:";
+                    lblEndTime.SetBounds(20, 100, 100, 20);
+                    inputForm.Controls.Add(lblEndTime);
+
+                    TextBox txtEndTime = new TextBox();
+                    txtEndTime.SetBounds(130, 100, 200, 20);
+                    txtEndTime.PlaceholderText = "e.g. 05:00 PM";
+                    inputForm.Controls.Add(txtEndTime);
+
+                    // Add day input
+                    Label lblDay = new Label();
+                    lblDay.Text = "Day:";
+                    lblDay.SetBounds(20, 140, 100, 20);
+                    inputForm.Controls.Add(lblDay);
+
+                    ComboBox cmbDay = new ComboBox();
+                    cmbDay.SetBounds(130, 140, 200, 20);
+                    cmbDay.DropDownStyle = ComboBoxStyle.DropDownList;
+                    cmbDay.Items.AddRange(new string[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" });
+                    inputForm.Controls.Add(cmbDay);
+
+                    // Add Save button
+                    Button btnSave = new Button();
+                    btnSave.Text = "Save";
+                    btnSave.DialogResult = DialogResult.OK;
+                    btnSave.SetBounds(130, 180, 75, 30);
+                    inputForm.Controls.Add(btnSave);
+
+                    // Add Cancel button
+                    Button btnCancel = new Button();
+                    btnCancel.Text = "Cancel";
+                    btnCancel.DialogResult = DialogResult.Cancel;
+                    btnCancel.SetBounds(230, 180, 75, 30);
+                    inputForm.Controls.Add(btnCancel);
+
+                    // Set default button and show the form
+                    inputForm.AcceptButton = btnSave;
+                    inputForm.CancelButton = btnCancel;
+
+                    DialogResult result = inputForm.ShowDialog();
+
+                    if (result == DialogResult.OK)
                     {
-                        MessageBox.Show("No records found to Insert, delete, and Update", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
+                        // Validate all inputs are provided
+                        if (string.IsNullOrWhiteSpace(txtDoctorId.Text) ||
+                            string.IsNullOrWhiteSpace(txtStartTime.Text) ||
+                            string.IsNullOrWhiteSpace(txtEndTime.Text) ||
+                            cmbDay.SelectedIndex == -1)
+                        {
+                            MessageBox.Show("All fields are required. Please complete all information.",
+                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
 
-                    // Get the doctor ID from the clicked row in DataGridView2
-                    int doctorId = Convert.ToInt32(dataGridView2.Rows[e.RowIndex].Cells["DOCTOR_ID"].Value);
+                        // Validate doctor ID is numeric
+                        if (!int.TryParse(txtDoctorId.Text, out int doctorId))
+                        {
+                            MessageBox.Show("Doctor ID must be a valid number.",
+                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
 
-                    // Check if the doctor ID exists in the Doctor table
-                    if (DoctorExists(doctorId))
-                    {
-                        // If the doctor exists, proceed with inserting the data
-                        string sTime = Convert.ToString(sTimeObject);
-                        string eTime = Convert.ToString(eTimeObject);
-                        string day = Convert.ToString(dayObject);
+                        // Check if the doctor exists
+                        if (!DoctorExists(doctorId))
+                        {
+                            MessageBox.Show($"Doctor with ID {doctorId} does not exist.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        string startTime = txtStartTime.Text;
+                        string endTime = txtEndTime.Text;
+                        string day = cmbDay.SelectedItem.ToString();
 
                         try
                         {
                             con4.Open();
                             OracleCommand cmd = con4.CreateCommand();
-                            cmd.CommandText = "INSERT INTO SCHEDULE (S_ID, S_TIME, E_TIME, DAY, DOCTOR_ID) VALUES (S_ID.NEXTVAL, :S_TIME, :E_TIME, :DAY, :DOCTOR_ID)";
+                            cmd.CommandText = "INSERT INTO SCHEDULE (S_ID, S_TIME, E_TIME, DAY, DOCTOR_ID) " +
+                                              "VALUES (S_ID.NEXTVAL, :S_TIME, :E_TIME, :DAY, :DOCTOR_ID)";
 
-                            cmd.Parameters.Add(":S_TIME", OracleDbType.Varchar2).Value = sTime;
-                            cmd.Parameters.Add(":E_TIME", OracleDbType.Varchar2).Value = eTime;
+                            cmd.Parameters.Add(":S_TIME", OracleDbType.Varchar2).Value = startTime;
+                            cmd.Parameters.Add(":E_TIME", OracleDbType.Varchar2).Value = endTime;
                             cmd.Parameters.Add(":DAY", OracleDbType.Varchar2).Value = day;
                             cmd.Parameters.Add(":DOCTOR_ID", OracleDbType.Int32).Value = doctorId;
 
                             int rowsAffected = cmd.ExecuteNonQuery();
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Record inserted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Schedule added successfully.",
+                                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 con4.Close();
                                 updateGrid(); // Refresh the DataGridView
+
                             }
                             else
                             {
-                                MessageBox.Show("No records inserted.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Failed to add schedule.",
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 con4.Close();
                                 updateGrid(); // Refresh the DataGridView
                             }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Error inserting record: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Error inserting schedule: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            con4.Close();
+                            updateGrid(); // Refresh the DataGridView
                         }
                         finally
                         {
-                            con4.Close();
+                            if (con4.State == ConnectionState.Open)
+                                con4.Close();
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("Doctor with ID " + doctorId + " does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("DATA cannot be Inserted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else if (e.ColumnIndex == dataGridView2.Columns["Delete"].Index && e.RowIndex >= 0)
             {
+                // The delete functionality seems fine, but let's improve error handling
                 object value = dataGridView2.Rows[e.RowIndex].Cells["S_ID"].Value;
                 if (value != null && value != DBNull.Value)
                 {
                     long scheduleId = Convert.ToInt64(value);
 
-                    DialogResult result = MessageBox.Show("Are you sure you want to delete this record?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show("Are you sure you want to delete this schedule?",
+                        "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
                     if (result == DialogResult.Yes)
                     {
-                        con4.Open();
-                        OracleCommand deleteScheduleCmd = con4.CreateCommand();
-                        deleteScheduleCmd.CommandText = "DELETE FROM SCHEDULE WHERE S_ID = :ScheduleId";
-                        deleteScheduleCmd.Parameters.Add("ScheduleId", OracleDbType.Int64).Value = scheduleId;
-                        deleteScheduleCmd.CommandType = CommandType.Text;
-                        int rowsAffected = deleteScheduleCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
+                        try
                         {
-                            MessageBox.Show("Record deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            con4.Open();
+                            OracleCommand deleteScheduleCmd = con4.CreateCommand();
+                            deleteScheduleCmd.CommandText = "DELETE FROM SCHEDULE WHERE S_ID = :ScheduleId";
+                            deleteScheduleCmd.Parameters.Add("ScheduleId", OracleDbType.Int64).Value = scheduleId;
+
+                            int rowsAffected = deleteScheduleCmd.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Schedule deleted successfully.",
+                                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                con4.Close();
+                                updateGrid(); // Refresh the DataGridView
+                                
+                            }
+                            else
+                            {
+                                MessageBox.Show("Failed to delete schedule.",
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                con4.Close();
+                            }
+                            
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error deleting schedule: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             con4.Close();
-                            updateGrid(); // Refresh the DataGridView
                         }
-                        else
+                        finally
                         {
-                            MessageBox.Show("Failed to delete record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            if (con4.State == ConnectionState.Open)
+                                con4.Close();
                         }
-                        con4.Close();
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Selected row does not contain a valid Schedule ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Selected row does not contain a valid Schedule ID.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    con4.Close();
                 }
-
-
-
+                con4.Close();
             }
-
         }
-
-
 
 
         // Function to check if a doctor exists in the Doctor table

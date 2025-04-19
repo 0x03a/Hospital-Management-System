@@ -130,6 +130,65 @@ namespace WinFormsApp5
 
         }
 
+        // Add this method to check if a time slot is available
+        private bool IsTimeSlotAvailable(string doctorName, string date, string startTime)
+        {
+            bool isAvailable = true;
+
+            try
+            {
+                con11.Open();
+                OracleCommand checkSlotCmd = con11.CreateCommand();
+
+                // Convert the selected date to Oracle format
+                checkSlotCmd.CommandText = @"
+            SELECT COUNT(*) 
+            FROM APPOINTMENT 
+            WHERE DOCTOR_NAME = :doctor_name 
+            AND A_DATE = TO_DATE(:date_value, 'YYYY-MM-DD')
+            AND S_TIME = :start_time";
+
+                checkSlotCmd.Parameters.Add(":doctor_name", OracleDbType.Varchar2).Value = doctorName;
+                checkSlotCmd.Parameters.Add(":date_value", OracleDbType.Varchar2).Value = date;
+                checkSlotCmd.Parameters.Add(":start_time", OracleDbType.Varchar2).Value = startTime;
+
+                int count = Convert.ToInt32(checkSlotCmd.ExecuteScalar());
+                isAvailable = (count == 0);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error checking time slot: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isAvailable = false;
+            }
+            finally
+            {
+                con11.Close();
+            }
+
+            return isAvailable;
+        }
+
+        // Add this method to generate available time slots
+        private List<string> GenerateTimeSlots(string startTime, string endTime)
+        {
+            List<string> timeSlots = new List<string>();
+
+            // Parse start and end times
+            DateTime start = DateTime.Parse(startTime);
+            DateTime end = DateTime.Parse(endTime);
+
+            // Generate 30-minute slots
+            DateTime current = start;
+            while (current.AddMinutes(30) <= end)
+            {
+                timeSlots.Add(current.ToString("hh:mm tt"));
+                current = current.AddMinutes(30);
+            }
+
+            return timeSlots;
+        }
+
+
         private void updateGrid(string name)
         {
 
@@ -255,158 +314,196 @@ namespace WinFormsApp5
 
         }
 
+        // Modify your appoint_bnt_Click method
         private void appoint_bnt_Click(object sender, EventArgs e)
         {
+            // Existing validation
             if (string.IsNullOrEmpty(comboBox1.Text))
             {
-                MessageBox.Show(" Select the Doctor first", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Select the Doctor first", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else if (string.IsNullOrEmpty(textBox1.Text))
             {
-                MessageBox.Show(" Write Your disease first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Write Your disease first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Assuming dataGridView1 is your DataGridView instance
-
-            // Check if there are any rows
-            if (dataGridView1.Rows.Count > 0)
+            // Check if there's a schedule available
+            if (dataGridView1.Rows.Count == 0)
             {
-                // Assuming you want to retrieve data from the first row
-                DataGridViewRow firstRow = dataGridView1.Rows[0];
-                bool hasNullValue = false;
+                MessageBox.Show("No schedule available for this doctor.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                // Get the indices of the columns
-                int sTimeColumnIndex = dataGridView1.Columns["S_Time"].Index;
-                int eTimeColumnIndex = dataGridView1.Columns["E_Time"].Index;
-                int dayColumnIndex = dataGridView1.Columns["DAY"].Index;
+            // Get schedule information from first row
+            DataGridViewRow firstRow = dataGridView1.Rows[0];
 
-                // Check each column for null or empty values
-                if (firstRow.Cells[sTimeColumnIndex].Value == null || string.IsNullOrWhiteSpace(firstRow.Cells[sTimeColumnIndex].Value.ToString()))
+            // Check if any of the cells contain null values
+            if (firstRow.Cells["S_Time"].Value == null ||
+                firstRow.Cells["E_Time"].Value == null ||
+                firstRow.Cells["DAY"].Value == null)
+            {
+                MessageBox.Show("Doctor has no following schedule!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string sTime = firstRow.Cells["S_Time"].Value.ToString();
+            string eTime = firstRow.Cells["E_Time"].Value.ToString();
+            string day = firstRow.Cells["DAY"].Value.ToString();
+
+            // Check if selected date matches day in schedule
+            DateTime selectedDate = dateTimePicker1.Value;
+            string selectedDayOfWeek = selectedDate.DayOfWeek.ToString().ToUpper();
+
+            if (selectedDayOfWeek != day.ToUpper())
+            {
+                MessageBox.Show($"Selected date ({selectedDate.ToString("dddd")}) doesn't match doctor's schedule day ({day}).",
+                                "Date Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Generate available time slots for this doctor's schedule
+            List<string> availableSlots = GenerateTimeSlots(sTime, eTime);
+
+            // Show time slot selection dialog
+            using (Form timeSlotForm = new Form())
+            {
+                timeSlotForm.Text = "Select Appointment Time";
+                timeSlotForm.Size = new Size(300, 400);
+                timeSlotForm.StartPosition = FormStartPosition.CenterParent;
+
+                Label label = new Label() { Text = "Available Time Slots:", Location = new Point(20, 20) };
+                timeSlotForm.Controls.Add(label);
+
+                ListBox slotList = new ListBox() { Location = new Point(20, 50), Size = new Size(250, 250) };
+                timeSlotForm.Controls.Add(slotList);
+
+                string selectedDate_str = selectedDate.ToString("yyyy-MM-dd");
+
+                // Populate list with available time slots
+                foreach (string slot in availableSlots)
                 {
-                    hasNullValue = true;
-                }
-                else if (firstRow.Cells[eTimeColumnIndex].Value == null || string.IsNullOrWhiteSpace(firstRow.Cells[eTimeColumnIndex].Value.ToString()))
-                {
-                    hasNullValue = true;
-                }
-                else if (firstRow.Cells[dayColumnIndex].Value == null || string.IsNullOrWhiteSpace(firstRow.Cells[dayColumnIndex].Value.ToString()))
-                {
-                    hasNullValue = true;
+                    if (IsTimeSlotAvailable(comboBox1.Text, selectedDate_str, slot))
+                    {
+                        slotList.Items.Add(slot);
+                    }
                 }
 
-                if (hasNullValue)
+                if (slotList.Items.Count == 0)
                 {
-                    // Show error message box
-                    MessageBox.Show("Doctor has no following schedule!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No available time slots for this doctor on the selected date.",
+                                   "No Availability", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-            }
-            else
-            {
-                // No rows are available
-                MessageBox.Show("No rows available in the DataGridView.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
-
-
-
-
-            // getting the Patient id to insert data in the appointment Table
-            if (!string.IsNullOrEmpty(comboBox1.Text) && !string.IsNullOrEmpty(textBox1.Text))
-            {
-                MessageBox.Show(" Appointed Sccuessfully!", "Information", MessageBoxButtons.OK);
-                con11.Open();
-                OracleCommand getPatient_id = con11.CreateCommand();
-                getPatient_id.CommandText = "SELECT ID FROM PATIENT WHERE NAME= :p_name ";
-                // Add parameter without ":" in the parameter name
-                getPatient_id.Parameters.Add("p_name", OracleDbType.Varchar2).Value = Patient_Name;
-                // Execute the command and get the Patient_ID
-                object result = getPatient_id.ExecuteScalar();
-                int patient_Id = Convert.ToInt32(result);
-
-                con11.Close();
-                string sTime = "";
-                string eTime = "";
-                string day = "";
-                // Reteriving the Shecdule data
-                if (dataGridView1.Rows.Count > 0)
+                System.Windows.Forms.Button selectButton = new System.Windows.Forms.Button()
                 {
-                    // Assuming you want to retrieve data from the first row
-                    DataGridViewRow firstRow = dataGridView1.Rows[0];
+                    Text = "Select",
+                    DialogResult = DialogResult.OK,
+                    Location = new Point(100, 320)
+                };
+                timeSlotForm.Controls.Add(selectButton);
 
-                    // Get the indices of the columns
-                    int sTimeColumnIndex = dataGridView1.Columns["S_Time"].Index;
-                    int eTimeColumnIndex = dataGridView1.Columns["E_Time"].Index;
-                    int dayColumnIndex = dataGridView1.Columns["DAY"].Index;
-
-                    // Retrieve data from the first row
-                    sTime = firstRow.Cells[sTimeColumnIndex].Value?.ToString();
-                    eTime = firstRow.Cells[eTimeColumnIndex].Value?.ToString();
-                    day = firstRow.Cells[dayColumnIndex].Value?.ToString();
-
-                    // Use the retrieved data as needed
-                    // For example, you can display it in message boxes
-                    MessageBox.Show($"S_Time: {sTime}, E_Time: {eTime}, DAY: {day}", "Data from First Row", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
+                if (timeSlotForm.ShowDialog() == DialogResult.OK && slotList.SelectedItem != null)
                 {
-                    // No rows are available
-                    MessageBox.Show("No rows available in the DataGridView.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    string selectedSlot = slotList.SelectedItem.ToString();
+
+                    // Calculate end time (30 minutes after start)
+                    DateTime startDateTime = DateTime.Parse(selectedSlot);
+                    DateTime endDateTime = startDateTime.AddMinutes(30);
+                    string calculatedEndTime = endDateTime.ToString("hh:mm tt");
+
+                    // Get patient ID
+                    int patient_Id = GetPatientIdFromName(Patient_Name);
+
+                    // Insert appointment with the selected time slot
+                    if (InsertAppointment(patient_Id, selectedSlot, calculatedEndTime, selectedDate_str,
+                                         textBox1.Text, comboBox1.Text))
+                    {
+                        MessageBox.Show("Appointment successfully booked for " + selectedSlot + " - " + calculatedEndTime,
+                                       "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Navigate back to patient view
+                        this.Hide();
+                        Patient_View form = new Patient_View(Patient_Name, Patient_Password);
+                        form.Closed += (s, args) => form.Close();
+                        form.Show();
+                    }
                 }
-
-
-
-
-                string doctor_name = comboBox1.Text.ToString();
-                string date = dateTimePicker1.Value.ToString("yyyy-MM-dd");
-
-                con11.Open();
-                OracleCommand insert_Into_Appointment_Table = con11.CreateCommand();
-                insert_Into_Appointment_Table.CommandText = @"
-    INSERT INTO APPOINTMENT (PATIENT_ID, S_TIME, E_TIME, STATUS, A_DATE, FEE, DISEASE, DOCTOR_NAME, A_ID)
-    VALUES (:p_id, :starting_time, :ending_time, :status, TO_DATE(:date_value, 'YYYY-MM-DD'), :fee, :disease, :doctor_name, A_ID.NEXTVAL)";
-
-                insert_Into_Appointment_Table.Parameters.Add(":p_id", OracleDbType.Int32).Value = patient_Id;
-                insert_Into_Appointment_Table.Parameters.Add(":starting_time", OracleDbType.Varchar2).Value = sTime;
-                insert_Into_Appointment_Table.Parameters.Add(":ending_time", OracleDbType.Varchar2).Value = eTime;
-                insert_Into_Appointment_Table.Parameters.Add(":status", OracleDbType.Varchar2).Value = "PENDING";
-                insert_Into_Appointment_Table.Parameters.Add(":date_value", OracleDbType.Varchar2).Value = date;
-                insert_Into_Appointment_Table.Parameters.Add(":fee", OracleDbType.Decimal).Value = FEE;
-                insert_Into_Appointment_Table.Parameters.Add(":disease", OracleDbType.Varchar2).Value = textBox1.Text.ToString();
-                insert_Into_Appointment_Table.Parameters.Add(":doctor_name", OracleDbType.Varchar2).Value = doctor_name;
-
-                insert_Into_Appointment_Table.CommandType = CommandType.Text;
-                int rows = insert_Into_Appointment_Table.ExecuteNonQuery();
-                if (rows > 0)
-                {
-                    MessageBox.Show("APPOINTMENT Account has been Successfully Registered", "INFORMATION", MessageBoxButtons.OK);
-                }
-
-
-
-
-
-
-                con11.Close();
-
-                this.Hide();
-                Patient_View form = new Patient_View(Patient_Name, Patient_Password);
-                form.Closed += (s, args) => form.Close();
-                form.Show();
-
-
-
-
-                return;
             }
-
-
-
         }
 
+
+        // Helper method to get patient ID
+        private int GetPatientIdFromName(string patientName)
+        {
+            int patientId = -1;
+
+            try
+            {
+                con11.Open();
+                OracleCommand getPatientIdCmd = con11.CreateCommand();
+                getPatientIdCmd.CommandText = "SELECT ID FROM PATIENT WHERE NAME = :p_name";
+                getPatientIdCmd.Parameters.Add("p_name", OracleDbType.Varchar2).Value = patientName;
+
+                object result = getPatientIdCmd.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    patientId = Convert.ToInt32(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error getting Patient ID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                con11.Close();
+            }
+
+            return patientId;
+        }
+
+        // Helper method to insert appointment
+        private bool InsertAppointment(int patientId, string startTime, string endTime, string date,
+                                      string disease, string doctorName)
+        {
+            bool success = false;
+
+            try
+            {
+                con11.Open();
+                OracleCommand insertCmd = con11.CreateCommand();
+                insertCmd.CommandText = @"
+            INSERT INTO APPOINTMENT (PATIENT_ID, S_TIME, E_TIME, STATUS, A_DATE, FEE, DISEASE, DOCTOR_NAME, A_ID)
+            VALUES (:p_id, :starting_time, :ending_time, :status, TO_DATE(:date_value, 'YYYY-MM-DD'), 
+                   :fee, :disease, :doctor_name, A_ID.NEXTVAL)";
+
+                insertCmd.Parameters.Add(":p_id", OracleDbType.Int32).Value = patientId;
+                insertCmd.Parameters.Add(":starting_time", OracleDbType.Varchar2).Value = startTime;
+                insertCmd.Parameters.Add(":ending_time", OracleDbType.Varchar2).Value = endTime;
+                insertCmd.Parameters.Add(":status", OracleDbType.Varchar2).Value = "PENDING";
+                insertCmd.Parameters.Add(":date_value", OracleDbType.Varchar2).Value = date;
+                insertCmd.Parameters.Add(":fee", OracleDbType.Decimal).Value = FEE;
+                insertCmd.Parameters.Add(":disease", OracleDbType.Varchar2).Value = disease;
+                insertCmd.Parameters.Add(":doctor_name", OracleDbType.Varchar2).Value = doctorName;
+
+                int rows = insertCmd.ExecuteNonQuery();
+                success = (rows > 0);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error booking appointment: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                con11.Close();
+            }
+
+            return success;
+        }
         private void logoutbtn_Click(object sender, EventArgs e)
         {
             // Logout button
