@@ -312,11 +312,11 @@ namespace WinFormsApp5
                 return;
             }
 
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                string columnName = dataGridView1.Columns[e.ColumnIndex].Name;
-                MessageBox.Show($"Clicked column: {columnName}, Index: {e.ColumnIndex}");
-            }
+            //if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            //{
+            //    string columnName = dataGridView1.Columns[e.ColumnIndex].Name;
+            //    MessageBox.Show($"Clicked column: {columnName}, Index: {e.ColumnIndex}");
+            //}
 
             if (e.ColumnIndex == dataGridView1.Columns["delete"].Index && e.RowIndex >= 0)
             {

@@ -458,7 +458,7 @@ namespace WinFormsApp5
                                 {
                                     if (patientPasswordCount > 0 || NursePasswordCount > 0 || ReceptionistPasswordCount > 0 || doctorPasswordCount > 0)
                                     {
-                                        MessageBox.Show($"{patientPasswordCount}, {NursePasswordCount}, {ReceptionistPasswordCount}, {doctorPasswordCount}");
+                                        //MessageBox.Show($"{patientPasswordCount}, {NursePasswordCount}, {ReceptionistPasswordCount}, {doctorPasswordCount}");
                                         MessageBox.Show("Password Exists. Please choose different .", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         con7.Close();
                                         updateGrid();
