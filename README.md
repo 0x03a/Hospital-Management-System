@@ -2,7 +2,7 @@
 
 ## 📄 Project Overview
 
-This Hospital Management System leverages **Oracle Database** and **Visual Studio** to efficiently manage patient records, staff roles, appointment schedules, and revenue tracking. It aims to streamline healthcare operations, enhance administrative control, and improve financial management.
+This Hospital Management System leverages **Oracle Database** and **Visual Studio** to efficiently manage patient records, staff roles, appointment schedules, and revenue tracking. It aims to streamline healthcare operations, enhance administrative control, and improve financial management.(used "Parameterized Sql query" to prevent Sql Injection, bcz "Sql query with string Concatentation" or "Non-Paramerterized Sql query" can cause Sql injection. )
 
 ### 🔧 Features
 
