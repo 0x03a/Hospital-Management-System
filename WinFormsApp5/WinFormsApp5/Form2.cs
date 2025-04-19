@@ -315,7 +315,7 @@ namespace WinFormsApp5
             con1.Open();
 
             OracleCommand report = con1.CreateCommand();
-            report.CommandText = "SELECT P.NAME,A.DOCTOR_NAME,A.A_DATE AS APPOINTMENT_DATE, A.FEE FROM APPOINTMENT A INNER JOIN PATIENT P ON P.IDD = A.PATIENT_ID";
+            report.CommandText = "SELECT P.NAME,A.DOCTOR_NAME,A.A_DATE AS APPOINTMENT_DATE, A.FEE FROM APPOINTMENT A INNER JOIN PATIENT P ON P.ID = A.PATIENT_ID";
             report.CommandType = CommandType.Text;
 
             // Execute the query and load data into a DataTable
