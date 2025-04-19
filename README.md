@@ -1,258 +1,131 @@
-[Queries.txt](https://github.com/user-attachments/files/19820374/Queries.txt)# Hospital-Management-System
+# 🏥 Hospital Management System
 
-short project Description:
+## 📄 Project Overview
 
-dependencies:
-Visualstudio 2022 community version, upto 2019
-Oracle data base 11g (mandatory)
-this is the link for downloading oracle 11g: https://www.oracle.com/database/technologies/xe-prior-release-downloads.html
-download it Oracle.VsDevTools.17.0 ( this is for Visualstudio 2022 community version)
-if like you have 2019 just search Oracle.VsDevTools for  Visualstudio 2019
+This Hospital Management System leverages **Oracle Database** and **Visual Studio** to efficiently manage patient records, staff roles, appointment schedules, and revenue tracking. It aims to streamline healthcare operations, enhance administrative control, and improve financial management.
 
-also in your visual studio 2022 or any other version upto 2019 all must have 
-.NET Version install init for visual studio 
+### 🔧 Features
 
+- OTP-based patient registration system  
+- Profile viewing for patients, doctors, and nurses  
+- Appointment scheduling module  
+- Role-based access control:  
+  - Nurses can only view profiles  
+  - Admins can perform full CRUD operations  
+- Revenue report generation (PDF export)
 
-Prerequisites: .NET Framework Installation for Visual Studio 2022
-To run and build this project with Oracle Developer Tools integration, make sure the following .NET Framework packs are installed in Visual Studio 2022:
+---
 
-✔ Required Components (select these in Visual Studio Installer):
- .NET Framework 4.7.1 targeting pack
+## 💼 Responsibilities
 
- .NET Framework 4.7.2 targeting pack
+- **Database Developer**  
+- **Backend Developer**  
+- **Admin**  
+- **Receptionist**  
+- **Doctor**  
+- **Nurse**
 
- .NET Framework 4.8 SDK
+---
 
- .NET Framework 4.8 targeting pack
+## 📎 Project Scope
 
- .NET Framework 4.8.1 targeting pack
+- 📌 Patient Registration with OTP  
+- 📌 Appointment Scheduling  
+- 📌 Profile View Functionality  
+- 📌 Record Tracking & Management  
+- 📌 Admin Controls (Add/Delete/Update)  
+- 📌 PDF Report Generation for Revenue
 
-📌 You don't need to install the SDKs or targeting packs for older versions like 4.7.0 or 4.7.1 SDK unless your specific project requires them.
+---
 
- .NET desktop development
-Build WPF, Windows Forms, and console apps using C#, Visual Basic, and F# with .NET and .NET Framework.
+## 📥 Queries File
 
- .NET Multi-platform App UI development (MAUI)
-Build Android, iOS, Windows, and Mac apps from a single codebase using C# and .NET MAUI.
+📄 [Download Queries.txt](https://github.com/user-attachments/files/19820374/Queries.txt)
 
+---
 
-After installing all these follow these steps:
-step1 open oracle 11g :
-![image](https://github.com/user-attachments/assets/9965287a-6054-4852-8d51-b690652a0900)
+## 💻 Dependencies
 
-step2: After you open it click on Application Express
-bydefault enter 
-username:system
-Password:system
+### 🧩 Required Tools & Versions
 
-step3: This interface below will open up then make your own workspace by folling the steps.
-![image](https://github.com/user-attachments/assets/7a418d46-4b50-4b8e-9b32-a608f6ec6cb5)
-Then create workspace.
-Recommed to make workspace with  (if no basic knowledge about it): 
-username: INSHALLL
-password: progr@mmer
-Now your work space has been created.
-login init and one by run all the queries
-given below:
+| Tool               | Version                  |
+|--------------------|---------------------------|
+| Visual Studio      | 2019 / 2022 Community     |
+| Oracle Database    | Oracle 11g (Mandatory)    |
+| .NET Framework     | See list below            |
 
+🔗 **Oracle 11g Download:**  
+[https://www.oracle.com/database/technologies/xe-prior-release-downloads.html](https://www.oracle.com/database/technologies/xe-prior-release-downloads.html)
 
-[Upl
+🔧 **Oracle Tools for Visual Studio:**
 
-// Patient Queries
+- For **VS 2022**: Download `Oracle.VsDevTools.17.0`  
+- For **VS 2019**: Download the appropriate version of `Oracle.VsDevTools`  
 
-- First Creating table of Patient
--- Create sequence for auto-incrementing ID
-CREATE SEQUENCE ID
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
-
--- Create PATIENT table
-CREATE TABLE PATIENT (
-  ID NUMBER PRIMARY KEY,
-  NAME VARCHAR2(100) NOT NULL,
-  PASSWORD VARCHAR2(100) NOT NULL,
-  EMAIL VARCHAR2(100) NOT NULL,
-  BLOODGROUP VARCHAR2(10) NOT NULL,
-  GENDER VARCHAR2(10) NOT NULL,
-  ADDRESS VARCHAR2(200) NOT NULL,
-  CNIC VARCHAR2(16) NOT NULL
-);
+> ⚠️ Make sure Visual Studio is **closed** before installing the Oracle tools.
 
--- Create index on NAME for faster lookups
-CREATE INDEX IDX_PATIENT_NAME ON PATIENT(NAME);
+---
 
--- Create index on EMAIL for faster lookups
-CREATE INDEX IDX_PATIENT_EMAIL ON PATIENT(EMAIL);
+## 📦 Prerequisites for .NET in Visual Studio
 
--- Create unique constraint on CNIC to prevent duplicates
-ALTER TABLE PATIENT ADD CONSTRAINT UQ_PATIENT_CNIC UNIQUE (CNIC);
+Install the following in Visual Studio Installer:
 
--- Optional: Add comments to document the table and columns
-COMMENT ON TABLE PATIENT IS 'Stores patient information for hospital management system';
-COMMENT ON COLUMN PATIENT.ID IS 'Unique identifier for patients';
-COMMENT ON COLUMN PATIENT.NAME IS 'Full name of the patient';
-COMMENT ON COLUMN PATIENT.PASSWORD IS 'Password for patient login';
-COMMENT ON COLUMN PATIENT.EMAIL IS 'Email address for communication and verification';
-COMMENT ON COLUMN PATIENT.BLOODGROUP IS 'Blood group of the patient';
-COMMENT ON COLUMN PATIENT.GENDER IS 'Gender of the patient (Male/Female)';
-COMMENT ON COLUMN PATIENT.ADDRESS IS 'Residential address of the patient';
-COMMENT ON COLUMN PATIENT.CNIC IS 'National ID card number in format XXXXX-XXXXXXXX-X';
-
-
-
-
-// DOCTOR 
--- Create DOCTORS table
-CREATE TABLE DOCTORS (
-  ID NUMBER PRIMARY KEY,
-  NAME VARCHAR2(100) NOT NULL,
-  PASSWORD VARCHAR2(100) NOT NULL,
-  EMAIL VARCHAR2(100) NOT NULL,
-  QUALIFICATION VARCHAR2(100) NOT NULL,
-  GENDER VARCHAR2(10) NOT NULL,
-  SALARY VARCHAR2(20) NOT NULL
-);
-
-
-CREATE SEQUENCE DOC_ID
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
-
-
-
-
-
--- APPOINTMENT table
-CREATE TABLE APPOINTMENT (
-  A_ID NUMBER PRIMARY KEY,
-  PATIENT_ID NUMBER NOT NULL,
-  S_TIME VARCHAR2(20) NOT NULL,
-  E_TIME VARCHAR2(20) NOT NULL,
-  STATUS VARCHAR2(20) NOT NULL,
-  A_DATE DATE NOT NULL,
-  FEE NUMBER NOT NULL,
-  DISEASE VARCHAR2(200) NOT NULL,
-  DOCTOR_NAME VARCHAR2(100) NOT NULL,
-  
-  CONSTRAINT FK_APPOINTMENT_PATIENT FOREIGN KEY (PATIENT_ID) 
-    REFERENCES PATIENT(ID),
-  
-  CONSTRAINT CHK_APPOINTMENT_STATUS CHECK 
-    (STATUS IN ('PENDING', 'APPROVED', 'CANCELLED', 'COMPLETED'))
-);
-
---NURSE table
+- ✅ .NET Framework 4.7.1 Targeting Pack  
+- ✅ .NET Framework 4.7.2 Targeting Pack  
+- ✅ .NET Framework 4.8 SDK  
+- ✅ .NET Framework 4.8 Targeting Pack  
+- ✅ .NET Framework 4.8.1 Targeting Pack  
 
+### 🛠️ Workloads to Include
 
--- Create sequence for auto-incrementing nurse IDs
-CREATE SEQUENCE NURSE_ID
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
+- **.NET Desktop Development**  
+- **.NET MAUI (Multi-platform App UI) Development** *(Optional)*
 
--- Create NURSE table with all constraints
-CREATE TABLE NURSE (
-  ID NUMBER PRIMARY KEY,
-  NAME VARCHAR2(100) NOT NULL,
-  PASSWORD VARCHAR2(100) NOT NULL,
-  EMAIL VARCHAR2(100) NOT NULL,
-  QUALIFICATION VARCHAR2(100) NOT NULL,
-  GENDER VARCHAR2(10) NOT NULL,
-  SALARY VARCHAR2(20) NOT NULL,
-  
-  -- Check constraints
-  CONSTRAINT CHK_NURSE_GENDER CHECK (GENDER IN ('Male', 'Female'))
-);
+---
 
--- Create unique constraint on NAME (as per your duplicate check logic)
-ALTER TABLE NURSE ADD CONSTRAINT UQ_NURSE_NAME UNIQUE (NAME);
+## 🚀 Getting Started
 
--- Create index on EMAIL for faster lookups
-CREATE INDEX IDX_NURSE_EMAIL ON NURSE(EMAIL);
+### Step 1: Open Oracle 11g
 
+- Launch Oracle Database 11g  
+- Click on **Application Express**  
+- Default login credentials:  
+  `Username: system`  
+  `Password: system`
 
+### Step 2: Create a Workspace
 
-//RECEPTIONIST TABLE
+- After login, create a new workspace  
+- Recommended beginner credentials:  
+  - `Username: INSHALLL`  
+  - `Password: progr@mmer`
 
+### Step 3: Run SQL Queries
 
--- Create sequence for auto-incrementing receptionist IDs
-CREATE SEQUENCE RECEPTIONIST_ID
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
+- Open your workspace  
+- Open and run each query from [Queries.txt](https://github.com/user-attachments/files/19820374/Queries.txt)  
+- Select a query and press `Shift + Enter` to run it
 
--- Create RECEPTIONIST table with all constraints
-CREATE TABLE RECEPTIONIST (
-  ID NUMBER PRIMARY KEY,
-  NAME VARCHAR2(100) NOT NULL,
-  PASSWORD VARCHAR2(100) NOT NULL,
-  EMAIL VARCHAR2(100) NOT NULL,
-  QUALIFICATION VARCHAR2(100) NOT NULL,
-  GENDER VARCHAR2(10) NOT NULL,
-  SALARY VARCHAR2(20) NOT NULL,
-  
-  -- Check constraints
-  CONSTRAINT CHK_RECEPTIONIST_GENDER CHECK (GENDER IN ('Male', 'Female'))
-);
+---
 
+## 🔗 Connecting to Oracle in Visual Studio
 
--- Create index on EMAIL for faster lookups
-CREATE INDEX IDX_RECEPTIONIST_EMAIL ON RECEPTIONIST(EMAIL);
+1. Open **Visual Studio**  
+2. Go to `Tools` → `Connect to Database`  
+3. Select **Oracle Database**  
+   ![Connection Screenshot](https://github.com/user-attachments/assets/f295133e-49ef-4650-8512-ef3dd142439a)  
+4. Fill in your credentials and connect  
+   ![Final Step Screenshot](https://github.com/user-attachments/assets/f12d88c9-4002-4f4d-bb08-30517992f5cd)
 
+---
 
-// SCHEDULE
+## ✅ Run the Project
 
--- Create sequence for auto-incrementing schedule IDs
-CREATE SEQUENCE S_ID
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
+Once you’ve run all queries and connected the database:
 
--- Create SCHEDULE table with all constraints
-CREATE TABLE SCHEDULE (
-  S_ID NUMBER PRIMARY KEY,
-  S_TIME VARCHAR2(20) NOT NULL,
-  E_TIME VARCHAR2(20) NOT NULL,
-  DAY VARCHAR2(10) NOT NULL,
-  DOCTOR_ID NUMBER NOT NULL,
-  
-  -- Foreign key to DOCTORS table
-  CONSTRAINT FK_SCHEDULE_DOCTOR FOREIGN KEY (DOCTOR_ID) 
-    REFERENCES DOCTORS(ID),
-  
-  -- Check constraints
-  CONSTRAINT CHK_SCHEDULE_DAY CHECK (DAY IN (
-    'Monday', 'Tuesday', 'Wednesday', 
-    'Thursday', 'Friday', 'Saturday', 'Sunday'
-  ))
-);
+- Build and run the Visual Studio project  
+- If you face any issues, fix them and submit a **Pull Request** 🙌
 
--- Create index on DOCTOR_ID for faster lookups
-CREATE INDEX IDX_SCHEDULE_DOCTOR ON SCHEDULE(DOCTOR_ID);
+---
 
--- Create index on DAY for day-based queries
-CREATE INDEX IDX_SCHEDULE_DAY ON SCHEDULE(DAY);
-
-
-
-
-
-
-
--- Note => first run all the queries after that run the project. (Mandatory)
-oading Queries.txt…]()
-
-
-
-
-
-
-first select a query then press shift+enter
-
+> Made with ❤️ by your development team.
